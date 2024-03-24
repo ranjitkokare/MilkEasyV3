@@ -6,7 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +21,7 @@ import com.milkeasy.model.CustomDateRange;
 import com.milkeasy.model.MilkTransaction;
 import com.milkeasy.model.User;
 import com.milkeasy.repository.UserRepository;
+import com.milkeasy.service.EmailSenderService;
 import com.milkeasy.service.GeneratePDFService;
 import com.milkeasy.service.MilkTransactionService;
 
@@ -24,11 +29,20 @@ import com.milkeasy.service.MilkTransactionService;
 public class MilkTransactionController {
 	
 	@Autowired
+	private EmailSenderService senderService;
+	
+	@Autowired
 	private MilkTransactionService milktransactionService;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
 	private GeneratePDFService generatePDFService;
+	
+	@EventListener(ApplicationReadyEvent.class)
+	public void triggerMail() throws MessagingException {
+		
+
+	}
 	
 	@GetMapping("/admin_statement_range")
 	public String showAdminStatementDates(Model model) {
@@ -94,9 +108,11 @@ public class MilkTransactionController {
 	
 	@PostMapping("/add_mc")
 	public String addMilkTransaction(@ModelAttribute("milkTransaction") MilkTransaction milkTransaction){
-		//save miktransaction
+		//save milk transaction
 		milktransactionService.addMilkTransaction(milkTransaction);
-		return "redirect:/view_add_mc";
+		
+		senderService.sendMilkTransactionToFarmer(milkTransaction);
+    	return "redirect:/view_add_mc";
 		
 	}
 	
