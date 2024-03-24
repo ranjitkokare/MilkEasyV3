@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>login</title>
+        <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    </head>
+<body>
+    <div class="banner">
+        <div class="navbar">
+            <img th:src="@{/images/logo.jpg}" class="logo">
+            <ul>
+                <li><a th:href="@{home}">Home</a></li>
+                <!-- <li><a href="#">Login</a></li> -->
+                <li><a href="#">About us</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <p>
+                <h1>Empowering farmers with fair prices <br>for their milk produce.</h1><br>
+                <h2>Tell us how you'd like to engage:</h2>
+            </p>
+            <div>
+                <a th:href="@{view_admin_login}">
+                <button type="button" th:name="me_role" th:value="admin"><span></span>I'm a Dairy Owner</button>
+				<a th:href="@{view_collector_login}">
+				<button type="button" th:name="me_role" th:value="collector"><span></span>I'm a Milk Collector</button>
+				<a th:href="@{view_farmer_login}">
+				<button type="button" th:name="me_role" th:value="farmer"><span></span>I'm a Farmer</button></a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+  
