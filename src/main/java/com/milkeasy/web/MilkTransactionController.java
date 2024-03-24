@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import com.milkeasy.model.CustomDateRange;
 import com.milkeasy.model.MilkTransaction;
 import com.milkeasy.model.User;
 import com.milkeasy.repository.UserRepository;
+import com.milkeasy.service.GeneratePDFService;
 import com.milkeasy.service.MilkTransactionService;
 
 @Controller
@@ -25,6 +27,8 @@ public class MilkTransactionController {
 	private MilkTransactionService milktransactionService;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private GeneratePDFService generatePDFService;
 	
 	@GetMapping("/admin_statement_range")
 	public String showAdminStatementDates(Model model) {
@@ -64,12 +68,18 @@ public class MilkTransactionController {
 	public String getFarmerStatementDates(Model model, @ModelAttribute("customDateRange") CustomDateRange customDateRange, Principal principal) {
 		Date fromDate =  customDateRange.getCustomFromdate();
 		Date toDate =  customDateRange.getCustomTodate();
+		String buttonClicked = customDateRange.getButtonClicked();
 		
 		String email = principal.getName();
 		User loggedUser = userRepository.findByEmail(email);
 		Long farmerId = loggedUser.getId();
+		List<MilkTransaction> allMilkTransaction =  milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(fromDate,toDate, farmerId);
 		
-		model.addAttribute("listMilkTransaction", milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(fromDate,toDate, farmerId));
+		if (buttonClicked.equals(",download")) {
+			generatePDFService.createMilkTransactionStatementPdf(loggedUser, allMilkTransaction, customDateRange);
+		}
+				
+		model.addAttribute("listMilkTransaction", allMilkTransaction);
 		return "farmer_statement";
 	}
 	

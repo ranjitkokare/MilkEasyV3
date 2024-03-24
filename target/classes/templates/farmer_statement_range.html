@@ -72,8 +72,13 @@
                   <input type="date" th:field="*{customFromdate}" placeholder="Date" required autofocus="autofocus">
                   <label>To Date</label>
                   <input type="date" th:field="*{customTodate}" placeholder="Date" required autofocus="autofocus">
-                  <button class="addBtn">
-	                <span class="btnText">Submit</span>
+                  <input type="hidden" name="buttonClicked" th:value="${buttonClicked}">
+                  <button class="addBtn" type="submit" name="buttonClicked" th:value="'view'">
+	                <span class="btnText">View</span>
+	                <i class="uil uil-plus-circle"></i>
+	              </button>
+	              <button class="addBtn" type="submit" name="buttonClicked" th:value="'download'">
+	                <span class="btnText">Download</span>
 	                <i class="uil uil-plus-circle"></i>
 	              </button>
 	            </div>

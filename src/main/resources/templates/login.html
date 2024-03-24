@@ -53,13 +53,10 @@
 					<br>
 					
 					<select class="form-control" name="meRole" id="meRole" required autofocus="autofocus">
-						<option class="my-dropdown" th:each="option : ${meRoleOptions}"
-						            th:value="${option}"
-						            th:text="${option}"
-						            th:selected="${option == meRole}" required autofocus="autofocus">
-						        Select Role
-					    </option>    
-				  	</select>
+						<option value="admin" th:selected="${meRole == 'admin'}">admin</option>
+					    <option value="collector" th:selected="${meRole == 'collector'}">collector</option>
+					    <option value="farmer" th:selected="${meRole == 'farmer'}">farmer</option>
+					</select>
 				  	
 					<div class = "form-group">
 						<label for ="username"> Username </label> :
