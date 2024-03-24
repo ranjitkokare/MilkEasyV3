@@ -33,18 +33,20 @@
           <span class="material-symbols-sharp">grid_view </span>
           <h3>Dashbord</h3>
         </a>
-        <a th:href="@{view_set_rate}">
+        <a th:href="@{view_set_rate}" class="active" id="setRate">
               <span class="material-symbols-sharp">settings</span>
               <h3>Set Rate</h3>
         </a>
-        <a th:href="@{admin_profile}" class="active" id="profile">
+        <a th:href="@{admin_profile}"  id="profile">
           <span class="material-symbols-sharp">person_outline </span>
           <h3>Profile</h3>
+          
         <a th:href="@{/view_add_mc}">
               <span class="material-symbols-sharp">add </span>
               <h3>Add Milk Collection</h3>
         </a>
         </a>
+        
         <a th:href="@{admin_statement_range}" id="statement">
           <span class="material-symbols-sharp">insights </span>
           <h3>Statements</h3>
@@ -70,43 +72,24 @@
         --------------- -->
 
     <main><h2>Welcome, <span sec:authentication="principal.username"> User</span></h2>
-      <form action="#">
+      <form action="#"th:action="@{/set_milkRate}" method="POST" th:object="${milkRate}">
         <div class = "form_outside">
           <div class="personal_detail">
-              <span class="title_head">Personal Details</span>
+              <span class="title_head">Set Rate</span>
               <div class="pd_fields">
                 <div class="pd_fields_individual">
-                  <label>Full Name</label>
-                  <input type="text" th:placeholder="${userProfile.fullName}" required>
+                  <label>Effective From Date</label>
+                  <input type="date" th:field="*{date}" placeholder="Date" required>
                 </div>
+                
                 <div class="pd_fields_individual">
-                  <label>Mobile Number</label>
-                  <input type="number" th:placeholder="${userProfile.mobile}" required>
-                </div>
-  
-                <div class="pd_fields_individual">
-                  <label>Email</label>
-                  <input type="email" th:placeholder="${userProfile.email}" required>
-                </div>
-  
-                <div class="pd_fields_individual">
-                  <label>UPI Id</label>
-                  <input type="text" placeholder="UPI Id" required>
-                </div>
-  
-                <div class="pd_fields_individual">
-                  <label>Address</label>
-                  <input type="text" th:placeholder="${userProfile.address}" required>
-                  <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
+                  <label>Rate/Litre</label>
+                  <input type="number" th:field="*{rate}" placeholder="Enter Rate" required>
                 </div>
               </div>
-            <div class="buttons">
-              <button class="editBtn">
-                <span class="btnText">Edit</span>
-                <i class="uil uil-edit"></i>
-              </button> 
+            <div class="buttons"> 
               <button class="saveBtn">
-                <span class="btnText">Save</span>
+                <span class="btnText">Set Rate</span>
                 <i class="uil uil-save"></i>
               </button> 
             </div>

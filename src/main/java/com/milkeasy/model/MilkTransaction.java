@@ -60,7 +60,7 @@ public class MilkTransaction {
 	public Date getCollectionDate() {
 		return collectionDate;
 	}
-	public void setCollectionDate(java.sql.Date collectionDate) {
+	public void setCollectionDate(java.sql.Date collectionDate) { //Date Conversion
 		this.collectionDate = collectionDate;
 	}
 	public Long getFarmerId() {
