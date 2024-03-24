@@ -3,6 +3,7 @@ package com.milkeasy.web;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,12 +39,14 @@ public class MilkTransactionController {
 	@Autowired
 	private GeneratePDFService generatePDFService;
 	
-	@EventListener(ApplicationReadyEvent.class)
-	public void triggerMail() throws MessagingException {
-		
-
+	private List<String> getAllFarmerFullNames(){
+		List <User> allFarmers = userRepository.findByMeRole("farmer");
+		List <String> allFarmerFullNames = new ArrayList();
+		for (User farmerUser : allFarmers) {
+			allFarmerFullNames.add(farmerUser.getFullName());
+		}
+		return allFarmerFullNames;
 	}
-	
 	@GetMapping("/admin_statement_range")
 	public String showAdminStatementDates(Model model) {
 		CustomDateRange customDateRange = new CustomDateRange();
@@ -101,13 +104,24 @@ public class MilkTransactionController {
 	@GetMapping("/view_add_mc")
 	public String viewAdd_mc(Model model) {
 		//create model attribute to bind form data
+		
 		MilkTransaction milkTransaction = new MilkTransaction();
 		model.addAttribute("milkTransaction",milkTransaction);
+		
+		model.addAttribute("allFarmerFullNames", getAllFarmerFullNames());
 		return "add_milk_collection";
 	} 
 	
 	@PostMapping("/add_mc")
-	public String addMilkTransaction(@ModelAttribute("milkTransaction") MilkTransaction milkTransaction){
+	public String addMilkTransaction(@ModelAttribute("milkTransaction") MilkTransaction milkTransaction, Principal principal){
+		
+		String email = principal.getName();
+		User loggedUser = userRepository.findByEmail(email);
+		milkTransaction.setCollectorId(loggedUser.getId());
+		User farmerUser = userRepository.findByFullName(milkTransaction.getFarmerFullName());
+		milkTransaction.setFarmerId(farmerUser.getId());
+		
+		
 		//save milk transaction
 		milktransactionService.addMilkTransaction(milkTransaction);
 		

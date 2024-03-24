@@ -54,19 +54,13 @@ public class EmailSenderService {
     }
 	
 	public void sendMilkTransactionToFarmer(MilkTransaction milkTransaction) {
-		Long farmerId = milkTransaction.getFarmerId();
-		//User farmerUser = userRepository.findById(farmerId);
-		Optional<User> optionalUser = userRepository.findById(farmerId);
-        if (optionalUser.isPresent()) {
-            User farmerUser = optionalUser.get();
-            String farmerEmail = farmerUser.getEmail();
-            String farmerFullName = farmerUser.getFullName();
-            String subject = "Aknowledgement of Milk Transaction";
-            String body = constructEmailBody(milkTransaction, farmerFullName);
-            sendSimpleEmail(farmerEmail, subject, body);            
-        } else {
-            System.out.println("User with ID " + farmerId + " not found");
-        }
+		String farmerFullName = milkTransaction.getFarmerFullName();
+		User farmerUser = userRepository.findByFullName(farmerFullName);
+        String farmerEmail = farmerUser.getEmail();
+        String subject = "Aknowledgement of Milk Transaction";
+        String body = constructEmailBody(milkTransaction, farmerFullName);
+        sendSimpleEmail(farmerEmail, subject, body);            
+        
         
         
         

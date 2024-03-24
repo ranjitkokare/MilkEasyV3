@@ -71,16 +71,24 @@
                   <label>Date</label>
                   <input type="date" th:field="*{collectionDate}" placeholder="Date" required autofocus="autofocus">
                 </div>
-  
+  				<!--
                 <div class="pd_fields_individual">
                   <label>Farmer Id</label>
                   <input type="number" th:field="*{farmerId}" placeholder="Farmer Id" required autofocus="autofocus">
                 </div>
+				-->
+				<label>Farmer</label>
+				        <select th:field="*{farmerFullName}" required autofocus="autofocus">
+				            <option value="">Select Farmer</option>
+				            <option th:each="farmerName : ${allFarmerFullNames}" th:value="${farmerName}" th:text="${farmerName}"></option>
+		        </select>
   
-                <div class="pd_fields_individual">
+                <!--
+				<div class="pd_fields_individual">
                   <label>Collector Id</label>
                   <input type="number" th:field="*{collectorId}" placeholder="Collector Id" required autofocus="autofocus">
                 </div>
+				-->
   
                 <div class="pd_fields_individual">
                   <label>Quantity</label>

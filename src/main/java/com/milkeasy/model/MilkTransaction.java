@@ -24,6 +24,9 @@ public class MilkTransaction {
 	@Column(name = "farmer_id")
 	private Long farmerId;
 	
+	@Column(name = "farmer_fullname")
+	private String farmerFullName;
+	
 	@Column(name = "collector_id")
 	private Long collectorId;
 	
@@ -39,11 +42,10 @@ public class MilkTransaction {
 		super();		
 	}
 
-	public MilkTransaction(Date collectionDate, Long farmerId, Long collectorId, Float quantity, int rate, Long amount) {
+	public MilkTransaction(Date collectionDate, String farmerFullName, Float quantity, int rate, Long amount) {
 		super();
 		this.collectionDate = collectionDate;
-		this.farmerId = farmerId;
-		this.collectorId = collectorId;
+		this.farmerFullName = farmerFullName;
 		this.quantity = quantity;
 		this.rate = rate;
 		this.amount = amount;
@@ -66,6 +68,12 @@ public class MilkTransaction {
 	}
 	public void setFarmerId(Long farmerId) {
 		this.farmerId = farmerId;
+	}
+	public String getFarmerFullName() {
+		return farmerFullName;
+	}
+	public void setFarmerFullName(String farmerFullName) {
+		this.farmerFullName = farmerFullName;
 	}
 	public Long getCollectorId() {
 		return collectorId;
