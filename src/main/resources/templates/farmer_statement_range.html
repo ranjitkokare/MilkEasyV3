@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <link rel="stylesheet"  href="../static/css/dash_style.css" th:href="@{/css/dash_style.css}">
+    
 </head>
 <body>
     <div class="container">
@@ -73,15 +74,17 @@
                   <label>To Date</label>
                   <input type="date" th:field="*{customTodate}" placeholder="Date" required autofocus="autofocus">
                   <input type="hidden" name="buttonClicked" th:value="${buttonClicked}">
+				<div class="buttons">
                   <button class="addBtn" type="submit" name="buttonClicked" th:value="'view'">
 	                <span class="btnText">View</span>
-	                <i class="uil uil-plus-circle"></i>
+	                <i class="uil uil-eye"></i>
 	              </button>
 	              <button class="addBtn" type="submit" name="buttonClicked" th:value="'download'">
 	                <span class="btnText">Download</span>
-	                <i class="uil uil-plus-circle"></i>
+	                <i class="uil uil-file-download-alt"></i>
 	              </button>
 	            </div>
+	       </div>
             </form>
                 
            

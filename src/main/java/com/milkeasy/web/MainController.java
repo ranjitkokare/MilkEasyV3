@@ -27,6 +27,11 @@ public class MainController {
 		return "login";
 	}
 	
+	@GetMapping("/about_us")
+	public String view_about_us() {
+		return "about_us";
+	}
+	
 	@GetMapping("/view_admin_login")
 	public String viewAdminLoginPage(Model model) {
 		
@@ -35,6 +40,8 @@ public class MainController {
 		model.addAttribute("meRoleOptions", meRoleOptions);		
 		return "login";
 	}
+	
+	
 	
 	@GetMapping("/view_collector_login")
 	public String viewCollectorLoginPage(Model model) {
