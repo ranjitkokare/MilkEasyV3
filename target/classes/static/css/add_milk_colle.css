@@ -219,14 +219,18 @@ b{
   margin-top: 8rem;
   width: auto;
   position: relative;
-  max-width: 900px; /* 900px*/
+  max-width: 700px; /* 900px*/
   background-color: #fff;
   border-radius: 10px;
  }
 
  main form{
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  min-height: 490px;
+  min-height:500px;
   background-color: #f2f2f2;
   padding: 0 18px;
  }
@@ -247,7 +251,7 @@ b{
  }
  form .pd_fields .pd_fields_individual{
   display: flex;
-  width: calc(100%/2 - 15px);
+  width: calc(100%/1 - 15px);
   flex-direction: column;
  }
  .pd_fields_individual label{
@@ -255,7 +259,8 @@ b{
   font-weight: 500;
   color: #111e88;
  }
- .pd_fields_individual input{
+ .pd_fields_individual input,select{
+  width: 100%;
   height: 45px;
   margin: 8px 0;
   outline: none;
@@ -264,6 +269,40 @@ b{
   border-radius: 5px;
   font-weight: 400;
  }
+ 
+ /* Drop Down Menu */
+ .main form .pd_fields_individual select {
+  width: 100%; 
+  height: 45px;
+  margin: 8px 0;
+  outline: none;
+  padding: 0 15px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font-weight: 400;
+}
+
+/* Style for dropdown list options */
+.main form .pd_fields_individual input select option {
+  /* Your option styles */
+  padding: 10px; /* Adjust padding as needed */
+  font-size: 25px; /* Adjust font size as needed */
+  color: #333; /* Text color */
+  background-color: #fff; /* Background color */
+  line-height: 10;
+}
+
+/* Hover effect for dropdown list options */
+.main form .pd_fields_individual select option:hover {
+  background-color: #f2f2f2; /* Hover background color */
+}
+
+/* Style for dropdown list container */
+.main form .pd_fields_individual select {
+  /* Your existing styles */
+  max-height: 150px; /* Set a maximum height for the dropdown list */
+  overflow-y: auto; /* Add scrollbar when content exceeds max height */
+}
 
 /* for save button */
  main form button, .btntext{
