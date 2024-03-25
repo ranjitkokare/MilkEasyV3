@@ -47,10 +47,10 @@
                 <span class="msg_count">14</span>
              </a>
   
-             <a href="#">
-                <span class="material-symbols-sharp">logout </span>
-                <h3>logout</h3>
-             </a>
+			<a sec:authorize="isAuthenticated()" th:href="@{/logout}">
+               <span class="material-symbols-sharp">logout </span>
+               <h3>logout</h3>
+     		</a>
                
   
   
@@ -76,10 +76,15 @@
                   <input type="date" th:field="*{customFromdate}" placeholder="Date" required autofocus="autofocus">
                   <label>To Date</label>
                   <input type="date" th:field="*{customTodate}" placeholder="Date" required autofocus="autofocus">
-                  <button class="addBtn">
-	                <span class="btnText">Submit</span>
-	                <i class="uil uil-plus-circle"></i>
-	              </button>
+				  <input type="hidden" name="buttonClicked" th:value="${buttonClicked}">
+                    <button class="addBtn" type="submit" name="buttonClicked" th:value="'view'">
+  	                <span class="btnText">View</span>
+  	                <i class="uil uil-plus-circle"></i>
+  	              </button>
+  	              <button class="addBtn" type="submit" name="buttonClicked" th:value="'download'">
+  	                <span class="btnText">Download</span>
+  	                <i class="uil uil-plus-circle"></i>
+  	              </button>
 	            </div>
             </form>
                 

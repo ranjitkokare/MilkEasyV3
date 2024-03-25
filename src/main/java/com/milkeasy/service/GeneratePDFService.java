@@ -21,13 +21,13 @@ import com.milkeasy.model.User;
 public class GeneratePDFService {
 	
 	public void createMilkTransactionStatementPdf(User user, List<MilkTransaction> allMilkTransaction, CustomDateRange customDateRange) {
-        String filePdf = "C:/Users/HP/Downloads/SamplePdfFile.pdf";
+		String filePdf = "C:/Users/HP/Downloads/SamplePdfFile.pdf";
         try {
             PdfWriter writer = new PdfWriter(filePdf);
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
             
-            document.add(new Paragraph("Farmer Details").setBold().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph("User Details").setBold().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
             document.add(new Paragraph("Full Name: " + user.getFullName()));
             document.add(new Paragraph("Email: " + user.getEmail()));
             document.add(new Paragraph("Mobile: " + user.getMobile()));
@@ -42,12 +42,13 @@ public class GeneratePDFService {
             }
             document.add(new Paragraph("Milk Transactions").setBold().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
             if (allMilkTransaction != null && !allMilkTransaction.isEmpty()) {
-                Table table = new Table(UnitValue.createPercentArray(new float[]{20, 20, 20, 20, 20})).useAllAvailableWidth(); // 5 columns
+                Table table = new Table(UnitValue.createPercentArray(new float[]{20, 20, 20, 20, 20, 20})).useAllAvailableWidth(); // 5 columns
                 table.setTextAlignment(TextAlignment.CENTER);
 
              // Table headers
                 table.addHeaderCell(new Cell().add(new Paragraph("Collection Date").setBold().setFontSize(12)));
                 table.addHeaderCell(new Cell().add(new Paragraph("Collector ID").setBold().setFontSize(12)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Farmer Full Name").setBold().setFontSize(12)));
                 table.addHeaderCell(new Cell().add(new Paragraph("Quantity").setBold().setFontSize(12)));
                 table.addHeaderCell(new Cell().add(new Paragraph("Rate").setBold().setFontSize(12)));
                 table.addHeaderCell(new Cell().add(new Paragraph("Amount").setBold().setFontSize(12)));
@@ -55,6 +56,7 @@ public class GeneratePDFService {
                 for (MilkTransaction milkTransaction : allMilkTransaction) {
                     table.addCell(new Cell().add(new Paragraph(milkTransaction.getCollectionDate().toString()).setFontSize(10)));
                     table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getCollectorId())).setFontSize(10)));
+                    table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getFarmerFullName())).setFontSize(10)));
                     table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getQuantity())).setFontSize(10)));
                     table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getRate())).setFontSize(10)));
                     table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getAmount())).setFontSize(10)));

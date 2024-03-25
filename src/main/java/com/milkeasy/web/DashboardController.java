@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.milkeasy.model.MilkTransaction;
 import com.milkeasy.model.User;
+import com.milkeasy.repository.MilkTransactionRepo;
 import com.milkeasy.repository.UserRepository;
 import com.milkeasy.service.MilkTransactionService;
 
@@ -25,6 +26,8 @@ public class DashboardController {
 	private MilkTransactionService milktransactionService;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private MilkTransactionRepo milkTransactionRepo;
 	
 	@GetMapping
 	public String home(Principal principal,Model model) {
@@ -35,6 +38,20 @@ public class DashboardController {
 			return "admin_dashboard";
 		}
 		else if (loggedUser.getMeRole().equals("collector")) {
+			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, -7);
+			Date toEndofWeek =  cal.getTime();
+			Long collectorId = loggedUser.getId();
+			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(toEndofWeek,fromYesterday, collectorId);
+			model.addAttribute("listMilkTransaction", milk_list);
+			
+			Double totalAmount = milkTransactionRepo.getTotalAmountByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(toEndofWeek,fromYesterday, collectorId);
+			model.addAttribute("totalAmount", totalAmount);
+			
+			Double totalQuantity = milkTransactionRepo.getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(toEndofWeek,fromYesterday, collectorId);
+			model.addAttribute("totalQuantity", totalQuantity);
+			
 			return "collector_dashboard";
 		}
 		else if (loggedUser.getMeRole().equals("farmer")) {
@@ -45,6 +62,13 @@ public class DashboardController {
 			Long farmerId = loggedUser.getId();
 			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(toEndofWeek,fromYesterday, farmerId);
 			model.addAttribute("listMilkTransaction", milk_list);
+			
+			Double totalAmount = milkTransactionRepo.getTotalAmountByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(toEndofWeek,fromYesterday, farmerId);
+			model.addAttribute("totalAmount", totalAmount);
+			
+			Double totalQuantity = milkTransactionRepo.getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(toEndofWeek,fromYesterday, farmerId);
+			model.addAttribute("totalQuantity", totalQuantity);
+			
 			return "farmer_dashboard";
 		}
 		return "me_home";

@@ -17,5 +17,8 @@ public interface MilkTransactionService{
 			Date fromCollectionDate, Date toCollectionDate);
 	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(
 			Date fromCollectionDate, Date toCollectionDate, Long farmerId);
-
+	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(
+			Date fromCollectionDate, Date toCollectionDate, Long collectorId);
+	List<MilkTransaction> getMilkTransactionByAdminIdAndApprovalStatus(Long adminId, String approvalStatus);
+ 
 }

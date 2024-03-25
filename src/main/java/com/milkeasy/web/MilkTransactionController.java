@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.milkeasy.model.CustomDateRange;
+import com.milkeasy.model.MilkRate;
 import com.milkeasy.model.MilkTransaction;
 import com.milkeasy.model.User;
+import com.milkeasy.repository.MilkRateRepository;
 import com.milkeasy.repository.UserRepository;
 import com.milkeasy.service.EmailSenderService;
 import com.milkeasy.service.GeneratePDFService;
@@ -38,6 +41,8 @@ public class MilkTransactionController {
 	private UserRepository userRepository;
 	@Autowired
 	private GeneratePDFService generatePDFService;
+	@Autowired
+	private MilkRateRepository milkRateRepository;
 	
 	private List<String> getAllFarmerFullNames(){
 		List <User> allFarmers = userRepository.findByMeRole("farmer");
@@ -46,6 +51,14 @@ public class MilkTransactionController {
 			allFarmerFullNames.add(farmerUser.getFullName());
 		}
 		return allFarmerFullNames;
+	}
+	private List<String> getAllAdminFullNames(){
+		List <User> alladmins = userRepository.findByMeRole("admin");
+		List <String> allAdminFullNames = new ArrayList();
+		for (User adminUser : alladmins) {
+			allAdminFullNames.add(adminUser.getFullName());
+		}
+		return allAdminFullNames;
 	}
 	@GetMapping("/admin_statement_range")
 	public String showAdminStatementDates(Model model) {
@@ -68,10 +81,21 @@ public class MilkTransactionController {
 		return "collector_statement_range";
 	}
 	@PostMapping("/collectorStatementRange")
-	public String getCollectorStatementDates(Model model, @ModelAttribute("customDateRange") CustomDateRange customDateRange) {
+	public String getCollectorStatementDates(Model model, @ModelAttribute("customDateRange") CustomDateRange customDateRange, Principal principal) {
 		Date fromDate =  customDateRange.getCustomFromdate();
 		Date toDate =  customDateRange.getCustomTodate();
-		model.addAttribute("listMilkTransaction", milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqual(fromDate,toDate));
+		String buttonClicked = customDateRange.getButtonClicked();
+		
+		String email = principal.getName();
+		User loggedUser = userRepository.findByEmail(email);
+		Long collectorId = loggedUser.getId();
+		List<MilkTransaction> allMilkTransaction = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(fromDate,toDate,collectorId);
+		
+		if (buttonClicked.equals(",download")) {
+			generatePDFService.createMilkTransactionStatementPdf(loggedUser, allMilkTransaction, customDateRange);
+		}
+		
+		model.addAttribute("listMilkTransaction", allMilkTransaction);
 		return "collector_statement";
 	}
 	
@@ -90,7 +114,7 @@ public class MilkTransactionController {
 		String email = principal.getName();
 		User loggedUser = userRepository.findByEmail(email);
 		Long farmerId = loggedUser.getId();
-		List<MilkTransaction> allMilkTransaction =  milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(fromDate,toDate, farmerId);
+		List<MilkTransaction> allMilkTransaction =  milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(fromDate,toDate,farmerId);
 		
 		if (buttonClicked.equals(",download")) {
 			generatePDFService.createMilkTransactionStatementPdf(loggedUser, allMilkTransaction, customDateRange);
@@ -109,6 +133,7 @@ public class MilkTransactionController {
 		model.addAttribute("milkTransaction",milkTransaction);
 		
 		model.addAttribute("allFarmerFullNames", getAllFarmerFullNames());
+		model.addAttribute("allAdminFullNames", getAllAdminFullNames());
 		return "add_milk_collection";
 	} 
 	
@@ -118,9 +143,17 @@ public class MilkTransactionController {
 		String email = principal.getName();
 		User loggedUser = userRepository.findByEmail(email);
 		milkTransaction.setCollectorId(loggedUser.getId());
+		milkTransaction.setCollectorFullName(loggedUser.getFullName());
+		
 		User farmerUser = userRepository.findByFullName(milkTransaction.getFarmerFullName());
 		milkTransaction.setFarmerId(farmerUser.getId());
 		
+		User adminUser = userRepository.findByFullName(milkTransaction.getAdminFullName());
+		milkTransaction.setAdminId(adminUser.getId());
+		
+		Float milkRate = milkRateRepository.getRateByDate(milkTransaction.getCollectionDate());
+		milkTransaction.setApprovalStatus("pending");
+		milkTransaction.setRate(milkRate);
 		
 		//save milk transaction
 		milktransactionService.addMilkTransaction(milkTransaction);
@@ -130,6 +163,16 @@ public class MilkTransactionController {
 		
 	}
 	
+	@GetMapping("/show_pending_approvals")
+	public String showPendingApprovals(Model model, Principal principal) {
+		String email = principal.getName();
+		User adminUser = userRepository.findByEmail(email);
+		
+		List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByAdminIdAndApprovalStatus(adminUser.getId(), "pending");
+		model.addAttribute("listMilkTransaction", milk_list);
+		return "admin_approvals";
+		
+	}
 	
 	
 	

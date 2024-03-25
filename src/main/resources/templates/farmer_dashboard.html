@@ -74,7 +74,7 @@
 
                  <div class="left">
                    <h3>Total Milk</h3>
-                   <h1>$25,024</h1>
+				   <h1 th:text="${totalQuantity}"></h1>
                  </div>
                   <div class="progress">
                       <svg>
@@ -92,10 +92,10 @@
                 <span class="material-symbols-sharp">local_mall</span>
                 <div class="middle">
  
-                  <div class="left">
-                    <h3>Total Amount</h3>
-                    <h1>$25,024</h1>
-                  </div>
+					<div class="left">
+					    <h3>Total Amount</h3>
+					    <h1 th:text="${totalAmount}"></h1>
+					</div>
                    <div class="progress">
                        <svg>
                           <circle  r="30" cy="40" cx="40"></circle>
@@ -104,7 +104,7 @@
                    </div>
  
                 </div>
-                <small>Last 24 Hours</small>
+                <small>Last Week</small>
              </div>
             </div>
        <!-- end insights -->

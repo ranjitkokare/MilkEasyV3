@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.milkeasy.model.MilkTransaction;
@@ -48,9 +49,22 @@ public class MilkTransactionServiceImpl implements MilkTransactionService{
 		
 		return milktransactionRepo.findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(fromCollectionDate,toCollectionDate,farmerId);
 	}
-
+	
+	@Override
+	public List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(Date fromCollectionDate,
+			Date toCollectionDate, Long collectorId) {
+		
+		return milktransactionRepo.findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(fromCollectionDate,toCollectionDate,collectorId);
+	}
+	
+	@Override
+	public List<MilkTransaction> getMilkTransactionByAdminIdAndApprovalStatus(Long adminId, String approvalStatus){
+		return milktransactionRepo.findByAdminIdAndApprovalStatus(adminId,approvalStatus);
+	}
+	
 	@Override
 	public void addMilkTransaction(MilkTransaction milkTransaction) {
+		
 		this.milktransactionRepo.save(milkTransaction);
 		
 	}

@@ -4,17 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Milk Collection</title>
+  <title>Profile</title>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <link rel="stylesheet" href="../static/css/add_milk_colle.css" th:href="@{/css/add_milk_colle.css}">
+    <link rel="stylesheet" href="../static/css/profile.css" th:href="@{/css/profile.css}">
   
 </head>
 
 <body>
   <div class="container">
     <aside>
+
       <div class="top">
         <!-- <div class="logo"> -->
         <img src="images/logo.jpg" class="logo">
@@ -26,29 +27,37 @@
         </div>
       </div>
       <!-- end top -->
-      <div class="sidebar">
+      <div class="sidebar" id="conditionalAnchors">
 
-        <a th:href="@{/}">
+        <a th:href="@{/}" id="dashboard">
           <span class="material-symbols-sharp">grid_view </span>
           <h3>Dashbord</h3>
         </a>
-        <a th:href="@{collector_profile}" >
+        <a th:href="@{view_set_rate}" class="active" id="setRate">
+              <span class="material-symbols-sharp">settings</span>
+              <h3>Set Rate</h3>
+        </a>
+        <a th:href="@{admin_profile}"  id="profile">
           <span class="material-symbols-sharp">person_outline </span>
           <h3>Profile</h3>
-        </a>
-        <a th:href="@{add_mc}" class="active">
+          
+        <a th:href="@{/view_add_mc}">
               <span class="material-symbols-sharp">add </span>
               <h3>Add Milk Collection</h3>
         </a>
-        <a th:href="@{collector_statement_range}">
+        </a>
+        
+        <a th:href="@{admin_statement_range}" id="statement">
           <span class="material-symbols-sharp">insights </span>
           <h3>Statements</h3>
         </a>
         
+
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">
               <span class="material-symbols-sharp">logout </span>
               <h3>logout</h3>
         </a>
+
 
 
       </div>
@@ -63,41 +72,25 @@
         --------------- -->
 
     <main><h2>Welcome, <span sec:authentication="principal.username"> User</span></h2>
-      <form action="#" th:action="@{/add_mc}" method="POST" th:object="${milkTransaction}">
+      <form action="#"th:action="@{/set_milkRate}" method="POST" th:object="${milkRate}">
         <div class = "form_outside">
           <div class="personal_detail">
-              <span class="title_head">Add Milk Collection</span>
+              <span class="title_head">Set Rate</span>
+              <div class="pd_fields">
                 <div class="pd_fields_individual">
-                  <label>Date</label>
-                  <input type="date" th:field="*{collectionDate}" placeholder="Date" required autofocus="autofocus">
+                  <label>Effective From Date</label>
+                  <input type="date" th:field="*{date}" placeholder="Date" required>
                 </div>
-  				<!--
+                
                 <div class="pd_fields_individual">
-                  <label>Farmer Id</label>
-                  <input type="number" th:field="*{farmerId}" placeholder="Farmer Id" required autofocus="autofocus">
-                </div>
-				-->
-				<label>Farmer</label>
-				        <select th:field="*{farmerFullName}" required autofocus="autofocus">
-				            <option value="">Select Farmer</option>
-				            <option th:each="farmerName : ${allFarmerFullNames}" th:value="${farmerName}" th:text="${farmerName}"></option>
-		        </select>
-				
-				<label>Dairy</label>
-				        <select th:field="*{adminFullName}" required autofocus="autofocus">
-				            <option value="">Select Dairy</option>
-				            <option th:each="adminName : ${allAdminFullNames}" th:value="${adminName}" th:text="${adminName}"></option>
-		        </select>
-  
-                <div class="pd_fields_individual">
-                  <label>Quantity</label>
-                  <input type="number" th:field="*{quantity}" placeholder="Quantity" required autofocus="autofocus">
-                  <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
+                  <label>Rate/Litre</label>
+                  <input type="number" th:field="*{rate}" placeholder="Enter Rate" required>
                 </div>
               </div>
-              <button class="addBtn">
-                <span class="btnText">Add Collection</span>
-                <i class="uil uil-plus-circle"></i>
+            <div class="buttons"> 
+              <button class="saveBtn">
+                <span class="btnText">Set Rate</span>
+                <i class="uil uil-save"></i>
               </button> 
             </div>
               

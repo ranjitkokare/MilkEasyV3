@@ -32,7 +32,7 @@
           <span class="material-symbols-sharp">grid_view </span>
           <h3>Dashbord</h3>
         </a>
-        <a th:href="@{admin_profile}" >
+        <a th:href="@{collector_profile}" >
           <span class="material-symbols-sharp">person_outline </span>
           <h3>Profile</h3>
         </a>
@@ -40,7 +40,7 @@
               <span class="material-symbols-sharp">add </span>
               <h3>Add Milk Collection</h3>
         </a>
-        <a th:href="@{admin_statement_range}">
+        <a th:href="@{collector_statement_range}">
           <span class="material-symbols-sharp">insights </span>
           <h3>Statements</h3>
         </a>
@@ -82,27 +82,16 @@
 				            <option value="">Select Farmer</option>
 				            <option th:each="farmerName : ${allFarmerFullNames}" th:value="${farmerName}" th:text="${farmerName}"></option>
 		        </select>
-  
-                <!--
-				<div class="pd_fields_individual">
-                  <label>Collector Id</label>
-                  <input type="number" th:field="*{collectorId}" placeholder="Collector Id" required autofocus="autofocus">
-                </div>
-				-->
+				
+				<label>Dairy</label>
+				        <select th:field="*{adminFullName}" required autofocus="autofocus">
+				            <option value="">Select Dairy</option>
+				            <option th:each="adminName : ${allAdminFullNames}" th:value="${adminName}" th:text="${adminName}"></option>
+		        </select>
   
                 <div class="pd_fields_individual">
                   <label>Quantity</label>
                   <input type="number" th:field="*{quantity}" placeholder="Quantity" required autofocus="autofocus">
-                  <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
-                </div>
-                <div class="pd_fields_individual">
-                  <label>Rate/Litre</label>
-                  <input type="number" th:field="*{rate}" placeholder="Rate/Litre" required autofocus="autofocus">
-                  <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
-                </div>
-                <div class="pd_fields_individual">
-                  <label>Total Amount</label>
-                  <input type="number" th:field="*{amount}"placeholder="Total Amount" required autofocus="autofocus">
                   <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
                 </div>
               </div>

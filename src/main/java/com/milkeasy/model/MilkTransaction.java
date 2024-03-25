@@ -27,14 +27,26 @@ public class MilkTransaction {
 	@Column(name = "farmer_fullname")
 	private String farmerFullName;
 	
+	@Column(name = "collector_fullname")
+	private String collectorFullName;
+	
 	@Column(name = "collector_id")
 	private Long collectorId;
 	
+	@Column(name = "admin_fullname")
+	private String adminFullName;
+	
+	@Column(name = "admin_id")
+	private Long adminId;
+	
 	private Float quantity;
 	
-	private int rate;
+	private Float rate;
 	
 	private Long amount;
+	
+	@Column(name = "approval_status")
+	private String approvalStatus;
 
 	
 	
@@ -42,13 +54,27 @@ public class MilkTransaction {
 		super();		
 	}
 
-	public MilkTransaction(Date collectionDate, String farmerFullName, Float quantity, int rate, Long amount) {
+	public MilkTransaction(Date collectionDate, String farmerFullName, String adminFullName, Float quantity, Float rate, Long amount) {
 		super();
 		this.collectionDate = collectionDate;
 		this.farmerFullName = farmerFullName;
+		this.adminFullName = adminFullName;
 		this.quantity = quantity;
 		this.rate = rate;
 		this.amount = amount;
+	}
+	
+	public MilkTransaction(Date collectionDate, Long farmerId, String farmerFullName, Long collectorId, String adminFullName, Float quantity, Float rate, Long amount, String approvalStatus) {
+		super();
+		this.collectionDate = collectionDate;
+		this.farmerId = farmerId;
+		this.farmerFullName = farmerFullName;
+		this.collectorId = collectorId;
+		this.adminFullName = adminFullName;
+		this.quantity = quantity;
+		this.rate = rate;
+		this.amount = amount;
+		this.approvalStatus = approvalStatus;
 	}
 
 	public Long getTransactionId() {
@@ -75,22 +101,41 @@ public class MilkTransaction {
 	public void setFarmerFullName(String farmerFullName) {
 		this.farmerFullName = farmerFullName;
 	}
+	public String getCollectorFullName() {
+		return collectorFullName;
+	}
+	public void setCollectorFullName(String collectorFullName) {
+		this.collectorFullName = collectorFullName;
+	}
 	public Long getCollectorId() {
 		return collectorId;
 	}
 	public void setCollectorId(Long collectorId) {
 		this.collectorId = collectorId;
 	}
+	public String getAdminFullName() {
+		return adminFullName;
+	}
+	public void setAdminFullName(String adminFullName) {
+		this.adminFullName = adminFullName;
+	}
+	public Long getAdminId() {
+		return adminId;
+	}
+	public void setAdminId(Long adminId) {
+		this.adminId = adminId;
+	}
+	
 	public Float getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Float quantity) {
 		this.quantity = quantity;
 	}
-	public int getRate() {
+	public Float getRate() {
 		return rate;
 	}
-	public void setRate(int rate) {
+	public void setRate(Float rate) {
 		this.rate = rate;
 	}
 	public Long getAmount() {
@@ -98,6 +143,12 @@ public class MilkTransaction {
 	}
 	public void setAmount(Long amount) {
 		this.amount = amount;
+	}
+	public String getApprovalStatus() {
+		return approvalStatus;
+	}
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
 	}
 	
 	

@@ -25,22 +25,26 @@
            <!-- end top -->
             <div class="sidebar">
   
-              <a th:href="@{/}">
-                <span class="material-symbols-sharp">grid_view </span>
-                <h3>Dashbord</h3> 
-             </a>
-             <a th:href="@{admin_profile}" >
-                <span class="material-symbols-sharp">person_outline </span>
-                <h3>Profile</h3>
-             </a>
-			 <a th:href="@{/show_pending_approvals}">
-	           <span class="material-symbols-sharp">add </span>
-	           <h3>Approvals</h3>
-	         </a>
-	 		 <a th:href="@{/admin_statement_range}" class="active">
-                <span class="material-symbols-sharp">insights </span>
-                <h3>Statements</h3>
-             </a>
+				<a th:href="@{/}" class="active">
+	              <span class="material-symbols-sharp">grid_view </span>
+	              <h3>Dashbord</h3>
+	           </a>
+	           <a th:href="@{view_set_rate}">
+	              <span class="material-symbols-sharp">settings</span>
+	              <h3>Set Rate</h3>
+	           </a>
+	           <a th:href="@{admin_profile}">
+	              <span class="material-symbols-sharp">person_outline </span>
+	              <h3>Profile</h3>
+	           </a>
+	           <a th:href="@{/show_pending_approvals}">
+	              <span class="material-symbols-sharp">add </span>
+	              <h3>Approvals</h3>
+	           </a>
+	           <a th:href="@{/admin_statement_range}">
+	              <span class="material-symbols-sharp">insights </span>
+	              <h3>Statements</h3>
+	           </a>
              
   
              <a href="#">
@@ -65,22 +69,36 @@
          <!-- end insights -->
         <div class="recent_order"><br>
 			<h2>Welcome, <span sec:authentication="principal.username"> User</span></h2>
-           <h1>Statement</h1>
-           <form action="#" th:action="@{/adminStatementRange}" method="POST" th:object="${customDateRange}">
-           <div class="statment_date_filter">
-                  <label>From Date</label>
-                  <input type="date" th:field="*{customFromdate}" placeholder="Date" required autofocus="autofocus">
-                  <label>To Date</label>
-                  <input type="date" th:field="*{customTodate}" placeholder="Date" required autofocus="autofocus">
-                  <button class="addBtn">
-	                <span class="btnText">Submit</span>
-	                <i class="uil uil-plus-circle"></i>
-	              </button>
-	            </div>
-            </form>
-                
-           
-           <!-- <a href="#">Show All</a>-->
+           <h1>Pending Approvals</h1>
+           <table>
+			   <thead>
+                <tr>
+                  <th>Tr.Id</th>
+                  <th>Collection Date</th>
+                  <th>Farmer</th>
+                  <th>Collector</th>
+                  <th>Quantity</th>
+                  <th>Rate</th>
+                  <th>Amount</th>
+				  <th></th>
+				  <th></th>
+                </tr>
+               </thead>
+                <tbody>
+                   <tr th:each="milkTransaction : ${listMilkTransaction}">
+                     <td th:text="${milkTransaction.transactionId}"></td>
+                     <td th:text="${milkTransaction.collectionDate}"></td>
+                     <td th:text="${milkTransaction.farmerFullName}"></td>
+                     <td th:text="${milkTransaction.collectorId}"></td>
+                     <td th:text="${milkTransaction.quantity}"></td>
+                     <td th:text="${milkTransaction.rate}"></td>
+                     <td class="warning"  th:text="${milkTransaction.amount}"></td>
+					 <td class="approvebtn btn-primary">Approve</td>
+					 <td class="rejectbtn btn-primary">Reject</td>
+                   </tr>
+                </tbody>
+           </table>
+           <!--<a href="#">Show All</a> -->
         </div>
   
         </main>
