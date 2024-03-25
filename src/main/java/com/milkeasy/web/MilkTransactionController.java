@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.milkeasy.model.CustomDateRange;
@@ -24,6 +25,7 @@ import com.milkeasy.model.MilkRate;
 import com.milkeasy.model.MilkTransaction;
 import com.milkeasy.model.User;
 import com.milkeasy.repository.MilkRateRepository;
+import com.milkeasy.repository.MilkTransactionRepo;
 import com.milkeasy.repository.UserRepository;
 import com.milkeasy.service.EmailSenderService;
 import com.milkeasy.service.GeneratePDFService;
@@ -43,6 +45,8 @@ public class MilkTransactionController {
 	private GeneratePDFService generatePDFService;
 	@Autowired
 	private MilkRateRepository milkRateRepository;
+	@Autowired
+	private MilkTransactionRepo milkTransactionRepo;
 	
 	private List<String> getAllFarmerFullNames(){
 		List <User> allFarmers = userRepository.findByMeRole("farmer");
@@ -174,6 +178,21 @@ public class MilkTransactionController {
 		
 	}
 	
+	@GetMapping("/approveMilkTransaction/{approval_status}/{id}")
+	public String approveMilkTransaction(@PathVariable (value = "id") long id, @PathVariable (value = "approval_status") String approval_status,  Model model, Principal principal) {
+		
+		MilkTransaction milkTransaction = milktransactionService.getMilkTransactionBytransactionId(id);
+		milkTransaction.setApprovalStatus(approval_status);
+		milkTransactionRepo.updateApprovalStatusByTransactionId(milkTransaction.getTransactionId(), milkTransaction.getApprovalStatus());
+		
+		String email = principal.getName();
+		User adminUser = userRepository.findByEmail(email);
+		
+		List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByAdminIdAndApprovalStatus(adminUser.getId(), "pending");
+		model.addAttribute("listMilkTransaction", milk_list);
+		
+		return "admin_approvals";
+	}
 	
 	
 }

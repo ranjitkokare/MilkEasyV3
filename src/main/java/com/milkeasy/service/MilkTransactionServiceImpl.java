@@ -31,6 +31,11 @@ public class MilkTransactionServiceImpl implements MilkTransactionService{
 	}
 	
 	@Override
+	public MilkTransaction getMilkTransactionBytransactionId(Long transactionId) {
+		
+		return milktransactionRepo.findByTransactionId(transactionId);
+	}
+	@Override
 	public List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqual(Date collectionDate) {
 		
 		return milktransactionRepo.findByCollectionDateGreaterThanEqual(collectionDate);

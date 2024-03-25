@@ -77,17 +77,20 @@
                   <input type="number" th:field="*{farmerId}" placeholder="Farmer Id" required autofocus="autofocus">
                 </div>
 				-->
-				<label>Farmer</label>
+				<div class="pd_fields_individual">
+					<label>Farmer</label>
+						
 				        <select th:field="*{farmerFullName}" required autofocus="autofocus">
 				            <option value="">Select Farmer</option>
+				 
 				            <option th:each="farmerName : ${allFarmerFullNames}" th:value="${farmerName}" th:text="${farmerName}"></option>
 		        </select>
-				
-				<label>Dairy</label>
-				        <select th:field="*{adminFullName}" required autofocus="autofocus">
-				            <option value="">Select Dairy</option>
-				            <option th:each="adminName : ${allAdminFullNames}" th:value="${adminName}" th:text="${adminName}"></option>
-		        </select>
+					<label>Dairy</label>
+			        <select th:field="*{adminFullName}" required autofocus="autofocus">
+			            <option value="">Select Dairy</option>
+			            <option th:each="adminName : ${allAdminFullNames}" th:value="${adminName}" th:text="${adminName}"></option>
+		        	</select>
+  				</div>
   
                 <div class="pd_fields_individual">
                   <label>Quantity</label>

@@ -450,6 +450,7 @@ main .recent_order a{
     transition: background-color 0.3s, color 0.3s;
     text-align: center;
     line-height: 30px;
+    margin-right: 10px;
 }
 
 .rejectbtn {
@@ -467,6 +468,7 @@ main .recent_order a{
     transition: background-color 0.3s, color 0.3s;
     text-align: center;
     line-height: 30px;
+    margin-left: 10px;
 }
 
 /*********************

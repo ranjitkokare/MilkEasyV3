@@ -10,7 +10,11 @@ public interface MilkTransactionService{
 
 	void addMilkTransaction(MilkTransaction milkTransaction);
 	
+	//void setMilkTransactionBytransactionId(Long transactionId);
+	
 	List<MilkTransaction> getAllMilkTransaction();
+	MilkTransaction getMilkTransactionBytransactionId(Long transactionId);
+	
 	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqual(Date collectionDate);
 
 	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqual(
