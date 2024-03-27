@@ -30,15 +30,15 @@
           <span class="material-symbols-sharp">grid_view </span>
           <h3>Dashbord</h3>
         </a>
-        <a th:href="@{farmer_profile}" class="active" id="profile">
+        <a th:href="@{/farmer_profile}" class="active" id="profile">
           <span class="material-symbols-sharp">person_outline </span>
           <h3>Profile</h3>
         </a>
-        <a th:href="@{farmer_statement_range}" id="statement">
+        <a th:href="@{/farmer_statement_range}" id="statement">
           <span class="material-symbols-sharp">insights </span>
           <h3>Statements</h3>
         </a>
-        <a th:href="@{farmer_feedback}" id="feedback">
+        <a th:href="@{/farmer_feedback}" id="feedback">
           <span class="material-symbols-sharp">mail_outline </span>
           <h3>Feedbacks</h3>
           <span class="msg_count">14</span>
@@ -61,44 +61,40 @@
           start main part
         --------------- -->
     <main><h2>Welcome, <span sec:authentication="principal.username"> User</span></h2>
-      <form action="#">
+      <form action="#" th:action="@{/updateProfile}" method="POST" th:object="${user}">
         <div class = "form_outside">
           <div class="personal_detail">
               <span class="title_head">Personal Details</span>
               <div class="pd_fields">
                 <div class="pd_fields_individual">
                   <label>Full Name</label>
-                  <input type="text" th:placeholder="${userProfile.fullName}" required>
+                  <input type="text" th:field="*{fullName}" th:placeholder=${userProfile.fullName}  required autofocus="autofocus">
                 </div>
                 <div class="pd_fields_individual">
                   <label>Mobile Number</label>
-                  <input type="number" th:placeholder="${userProfile.mobile}" required>
+                  <input type="number" th:field="*{mobile}" th:placeholder="${userProfile.mobile}" required autofocus="autofocus">
                 </div>
   
                 <div class="pd_fields_individual">
                   <label>Email</label>
-                  <input type="email" th:placeholder="${userProfile.email}" required>
+                  <input type="email" th:value="${userProfile.email }" required autofocus="autofocus" disabled>
                 </div>
   
                 <div class="pd_fields_individual">
                   <label>UPI Id</label>
-                  <input type="text" placeholder="UPI Id" required>
+                  <input type="text" th:field="*{upiId}" th:placeholder="${userProfile.upiId}" required autofocus="autofocus">
                 </div>
   
                 <div class="pd_fields_individual">
                   <label>Address</label>
-                  <input type="text" th:placeholder="${userProfile.address}" required>
+                  <input type="text" th:field="*{address}" th:placeholder="${userProfile.address}" required autofocus="autofocus">
                   <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
                 </div>
               </div>
-            <div class="buttons">
-              <button class="editBtn">
-                <span class="btnText">Edit</span>
-                <i class="uil uil-edit"></i>
-              </button> 
+            <div class="buttons"> 
               <button class="saveBtn">
-                <span class="btnText">Save</span>
-                <i class="uil uil-save"></i>
+                <span class="btnText">Update</span>
+                <i class="uil uil-file-edit-alt"></i>
               </button> 
             </div>
               

@@ -31,6 +31,9 @@ public class User {
 	
 	private String email;
 	
+	@Column(name = "upi_id")
+	private String upiId;
+	
 	@Column(name = "mobile")
 	private String mobile;
 	
@@ -86,6 +89,12 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getUpiId() {
+		return upiId;
+	}
+	public void setUpiId(String upiId) {
+		this.upiId = upiId;
 	}
 	public String getMobile() {
 		return mobile;
