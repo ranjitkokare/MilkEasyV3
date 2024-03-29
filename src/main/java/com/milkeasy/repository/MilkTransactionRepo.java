@@ -20,37 +20,45 @@ public interface MilkTransactionRepo extends JpaRepository<MilkTransaction, Long
 	List<MilkTransaction> findByCollectionDateGreaterThanEqual(Date fromCollectionDate);
 	MilkTransaction findByTransactionId(Long transactionid);
 	List<MilkTransaction> findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqual(Date fromCollectionDate, Date toCollectionDate);
-	List<MilkTransaction> findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(Date fromCollectionDate, Date toCollectionDate, Long farmerId);
-	List<MilkTransaction> findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(Date fromCollectionDate, Date toCollectionDate, Long collectorId);
+	List<MilkTransaction> findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerIdAndApprovalStatus(Date fromCollectionDate, Date toCollectionDate, Long farmerId, String approvalStatus);
+	List<MilkTransaction> findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorIdAndApprovalStatus(Date fromCollectionDate, Date toCollectionDate, Long collectorId, String approvalStatus);
 	List<MilkTransaction> findByAdminIdAndApprovalStatus(Long adminId, String approvalStatus);
+	
 	
 	@Query("SELECT SUM(t.amount) FROM MilkTransaction t " +
 	           "WHERE t.collectionDate BETWEEN :startDate AND :endDate " +
-	           "AND t.farmerId = :farmerId")
+	           "AND t.farmerId = :farmerId AND t.approvalStatus = 'approved'")
     Double getTotalAmountByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(@Param("startDate") Date fromCollectionDate,
 	                                                 @Param("endDate") Date toCollectionDate,
 	                                                 @Param("farmerId") Long farmerId);
 
 	@Query("SELECT SUM(t.quantity) FROM MilkTransaction t " +
 	           "WHERE t.collectionDate BETWEEN :startDate AND :endDate " +
-	           "AND t.farmerId = :farmerId")
+	           "AND t.farmerId = :farmerId AND t.approvalStatus = 'approved'")
 	Double getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(@Param("startDate") Date fromCollectionDate,
 	                                                 @Param("endDate") Date toCollectionDate,
 	                                                 @Param("farmerId") Long farmerId);
 	
 	@Query("SELECT SUM(t.amount) FROM MilkTransaction t " +
 	           "WHERE t.collectionDate BETWEEN :startDate AND :endDate " +
-	           "AND t.collectorId = :collectorId")
+	           "AND t.collectorId = :collectorId AND t.approvalStatus = 'approved'")
 	Double getTotalAmountByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(@Param("startDate") Date fromCollectionDate,
 	                                                 @Param("endDate") Date toCollectionDate,
 	                                                 @Param("collectorId") Long collectorId);
 
 	@Query("SELECT SUM(t.quantity) FROM MilkTransaction t " +
 	           "WHERE t.collectionDate BETWEEN :startDate AND :endDate " +
-	           "AND t.collectorId = :collectorId")
+	           "AND t.collectorId = :collectorId AND t.approvalStatus = 'approved'")
 	Double getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(@Param("startDate") Date fromCollectionDate,
 	                                                 @Param("endDate") Date toCollectionDate,
 	                                                 @Param("collectorId") Long collectorId);
+	//total approved collection by admin
+	@Query("SELECT SUM(t.quantity) FROM MilkTransaction t " +
+	           "WHERE t.collectionDate BETWEEN :startDate AND :endDate " +
+	           "AND t.adminId = :adminId AND t.approvalStatus = :approvalStatus")
+	Double getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndAdminIdAndApprovalStatus(@Param("startDate") Date fromCollectionDate,
+	                                                 @Param("endDate") Date toCollectionDate,
+	                                                 @Param("adminId") Long adminId, @Param("approvalStatus") String approvalStatus);
 	
 	@Modifying
 	@Transactional

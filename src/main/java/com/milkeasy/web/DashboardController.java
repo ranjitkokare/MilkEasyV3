@@ -30,11 +30,31 @@ public class DashboardController {
 	private MilkTransactionRepo milkTransactionRepo;
 	
 	@GetMapping
-	public String home(Principal principal,Model model) {
+	public String home(Principal principal,Model model,Long transactionId) {
 		
 		String email = principal.getName();
 		User loggedUser = userRepository.findByEmail(email);
 		if (loggedUser.getMeRole().equals("admin")) {
+			
+			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, -7);
+			Date toEndofWeek =  cal.getTime();
+			Long adminId = loggedUser.getId();
+			//passing logged user name to dashboard
+			String adminName = loggedUser.getFullName();
+			model.addAttribute("adminName",adminName);
+//			MilkTransaction milkTransaction = new MilkTransaction();
+//			String approvalStatus = milkTransaction.getApprovalStatus();
+//			
+			Double totalApprovedQuantity = milkTransactionRepo.getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndAdminIdAndApprovalStatus(toEndofWeek,
+					fromYesterday, adminId, "approved");
+			model.addAttribute("totalApprovedQuantity", totalApprovedQuantity);
+			
+			Double totalPendingQuantity = milkTransactionRepo.getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndAdminIdAndApprovalStatus(toEndofWeek,
+					fromYesterday, adminId, "pending");
+			model.addAttribute("totalPendingQuantity", totalPendingQuantity);
+			
 			return "admin_dashboard";
 		}
 		else if (loggedUser.getMeRole().equals("collector")) {
@@ -43,7 +63,8 @@ public class DashboardController {
 			cal.add(Calendar.DATE, -7);
 			Date toEndofWeek =  cal.getTime();
 			Long collectorId = loggedUser.getId();
-			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(toEndofWeek,fromYesterday, collectorId);
+			String approvalStatus = "approved";
+			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorIdAndApprovalStatus(toEndofWeek,fromYesterday, collectorId, approvalStatus);
 			model.addAttribute("listMilkTransaction", milk_list);
 			
 			Double totalAmount = milkTransactionRepo.getTotalAmountByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(toEndofWeek,fromYesterday, collectorId);
@@ -60,7 +81,8 @@ public class DashboardController {
 			cal.add(Calendar.DATE, -7);
 			Date toEndofWeek =  cal.getTime();
 			Long farmerId = loggedUser.getId();
-			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(toEndofWeek,fromYesterday, farmerId);
+			String approvalStatus = "approved";
+			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerIdAndApprovalStatus(toEndofWeek,fromYesterday, farmerId, approvalStatus);
 			model.addAttribute("listMilkTransaction", milk_list);
 			
 			Double totalAmount = milkTransactionRepo.getTotalAmountByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(toEndofWeek,fromYesterday, farmerId);

@@ -49,17 +49,17 @@ public class MilkTransactionServiceImpl implements MilkTransactionService{
 	}
 	
 	@Override
-	public List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(Date fromCollectionDate,
-			Date toCollectionDate, Long farmerId) {
+	public List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerIdAndApprovalStatus(Date fromCollectionDate,
+			Date toCollectionDate, Long farmerId, String approvalStatus) {
 		
-		return milktransactionRepo.findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(fromCollectionDate,toCollectionDate,farmerId);
+		return milktransactionRepo.findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerIdAndApprovalStatus(fromCollectionDate,toCollectionDate,farmerId, approvalStatus);
 	}
 	
 	@Override
-	public List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(Date fromCollectionDate,
-			Date toCollectionDate, Long collectorId) {
+	public List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorIdAndApprovalStatus(Date fromCollectionDate,
+			Date toCollectionDate, Long collectorId, String approvalStatus) {
 		
-		return milktransactionRepo.findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(fromCollectionDate,toCollectionDate,collectorId);
+		return milktransactionRepo.findByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorIdAndApprovalStatus(fromCollectionDate,toCollectionDate,collectorId,approvalStatus);
 	}
 	
 	@Override

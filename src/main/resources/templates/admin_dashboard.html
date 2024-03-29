@@ -29,18 +29,22 @@
               <span class="material-symbols-sharp">grid_view </span>
               <h3>Dashbord</h3>
            </a>
+           
            <a th:href="@{view_set_rate}">
               <span class="material-symbols-sharp">settings</span>
               <h3>Set Rate</h3>
            </a>
+           
            <a th:href="@{admin_profile}">
               <span class="material-symbols-sharp">person_outline </span>
               <h3>Profile</h3>
            </a>
+           
 		   <a th:href="@{/show_pending_approvals}">
               <span class="material-symbols-sharp">add </span>
               <h3>Approvals</h3>
            </a>
+           
            <a th:href="@{/admin_statement_range}">
               <span class="material-symbols-sharp">insights </span>
               <h3>Statements</h3>
@@ -67,7 +71,7 @@
 
       <main>
 		  <h2>Welcome,
-		  <span sec:authentication="principal.username"> User</span></h2>
+		  <span th:text="${adminName}"> User</span></h2>
            <h1>Dashbord</h1>
         <div class="insights">
 
@@ -77,8 +81,8 @@
                <div class="middle">
 
                  <div class="left">
-                   <h3>Total Milk</h3>
-                   <h1>$25,024</h1>
+                   <h3>Total Approved Milk</h3>
+                   <h1 th:text="${totalApprovedQuantity}"></h1>
                  </div>
                   <div class="progress">
                       <svg>
@@ -88,17 +92,17 @@
                   </div>
 
                </div>
-               <small>Last Week</small>
+               <small>Last Week (in Litre)</small>
             </div>
            <!-- end seling -->
               <!-- start expenses -->
               <div class="expenses">
-                <span class="material-symbols-sharp">local_mall</span>
+                <span class="material-symbols-sharp">trending_up</span>
                 <div class="middle">
  
                   <div class="left">
-                    <h3>Total Amount</h3>
-                    <h1>$25,024</h1>
+                    <h3>Total Pending Milk</h3>
+                    <h1 th:text="${totalPendingQuantity}"></h1totalPendingQuantity>
                   </div>
                    <div class="progress">
                        <svg>
@@ -108,7 +112,7 @@
                    </div>
  
                 </div>
-                <small>Last 24 Hours</small>
+                <small>Last Week (in Litre)</small>
              </div>
             </div>
        <!-- end insights -->
@@ -157,7 +161,6 @@
                 </tr>
               </tbody>
          </table>
-         <a href="#">Show All</a>
       </div>
 
       </main>

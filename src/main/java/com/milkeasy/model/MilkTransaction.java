@@ -43,7 +43,7 @@ public class MilkTransaction {
 	
 	private Float rate;
 	
-	private Long amount;
+	private Float amount;
 	
 	@Column(name = "approval_status")
 	private String approvalStatus;
@@ -54,7 +54,7 @@ public class MilkTransaction {
 		super();		
 	}
 
-	public MilkTransaction(Date collectionDate, String farmerFullName, String adminFullName, Float quantity, Float rate, Long amount) {
+	public MilkTransaction(Date collectionDate, String farmerFullName, String adminFullName, Float quantity, Float rate, Float amount) {
 		super();
 		this.collectionDate = collectionDate;
 		this.farmerFullName = farmerFullName;
@@ -64,7 +64,7 @@ public class MilkTransaction {
 		this.amount = amount;
 	}
 	
-	public MilkTransaction(Date collectionDate, Long farmerId, String farmerFullName, Long collectorId, String adminFullName, Float quantity, Float rate, Long amount, String approvalStatus) {
+	public MilkTransaction(Date collectionDate, Long farmerId, String farmerFullName, Long collectorId, String adminFullName, Float quantity, Float rate, Float amount, String approvalStatus) {
 		super();
 		this.collectionDate = collectionDate;
 		this.farmerId = farmerId;
@@ -138,10 +138,10 @@ public class MilkTransaction {
 	public void setRate(Float rate) {
 		this.rate = rate;
 	}
-	public Long getAmount() {
+	public Float getAmount() {
 		return amount;
 	}
-	public void setAmount(Long amount) {
+	public void setAmount(Float amount) {
 		this.amount = amount;
 	}
 	public String getApprovalStatus() {

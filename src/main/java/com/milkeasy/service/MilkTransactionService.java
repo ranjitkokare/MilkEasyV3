@@ -19,10 +19,10 @@ public interface MilkTransactionService{
 
 	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqual(
 			Date fromCollectionDate, Date toCollectionDate);
-	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(
-			Date fromCollectionDate, Date toCollectionDate, Long farmerId);
-	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(
-			Date fromCollectionDate, Date toCollectionDate, Long collectorId);
+	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerIdAndApprovalStatus(
+			Date fromCollectionDate, Date toCollectionDate, Long farmerId, String approvalStatus);
+	List<MilkTransaction> getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorIdAndApprovalStatus(
+			Date fromCollectionDate, Date toCollectionDate, Long collectorId, String approvalStatus);
 	List<MilkTransaction> getMilkTransactionByAdminIdAndApprovalStatus(Long adminId, String approvalStatus);
  
 }

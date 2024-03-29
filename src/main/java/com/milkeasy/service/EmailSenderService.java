@@ -49,20 +49,24 @@ public class EmailSenderService {
         body.append("Quantity: ").append(milkTransaction.getQuantity()).append("\n")
 	        .append("Rate: ").append(milkTransaction.getRate()).append("\n")
 	        .append("Amount: ").append(milkTransaction.getAmount()).append("\n")
+	        .append("Approval Status: ").append(milkTransaction.getApprovalStatus()).append("\n")
 	        .append("\nThank you for your contribution!\n");
         return body.toString();
     }
 	
-	public void sendMilkTransactionToFarmer(MilkTransaction milkTransaction) {
+	public void sendMilkTransactionToFarmerAndCollector(MilkTransaction milkTransaction) {
 		String farmerFullName = milkTransaction.getFarmerFullName();
 		User farmerUser = userRepository.findByFullName(farmerFullName);
         String farmerEmail = farmerUser.getEmail();
         String subject = "Aknowledgement of Milk Transaction";
-        String body = constructEmailBody(milkTransaction, farmerFullName);
-        sendSimpleEmail(farmerEmail, subject, body);            
+        String farmerBody = constructEmailBody(milkTransaction, farmerFullName);
+        sendSimpleEmail(farmerEmail, subject, farmerBody);            
         
         
-        
-        
+        String collectorFullName = milkTransaction.getCollectorFullName();
+        String collectorBody = constructEmailBody(milkTransaction, collectorFullName);
+        User collectorUser = userRepository.findByFullName(collectorFullName);
+        String collectorEmail = collectorUser.getEmail();
+        sendSimpleEmail(collectorEmail, subject, collectorBody);  
 	}
 }

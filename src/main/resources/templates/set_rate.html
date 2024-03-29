@@ -33,21 +33,21 @@
           <span class="material-symbols-sharp">grid_view </span>
           <h3>Dashbord</h3>
         </a>
-        <a th:href="@{view_set_rate}" class="active" id="setRate">
+        <a th:href="@{/view_set_rate}" class="active" id="setRate">
               <span class="material-symbols-sharp">settings</span>
               <h3>Set Rate</h3>
         </a>
-        <a th:href="@{admin_profile}"  id="profile">
+        <a th:href="@{/admin_profile}"  id="profile">
           <span class="material-symbols-sharp">person_outline </span>
           <h3>Profile</h3>
-          
-        <a th:href="@{/view_add_mc}">
-              <span class="material-symbols-sharp">add </span>
-              <h3>Add Milk Collection</h3>
-        </a>
         </a>
         
-        <a th:href="@{admin_statement_range}" id="statement">
+        <a th:href="@{/show_pending_approvals}">
+              <span class="material-symbols-sharp">add </span>
+              <h3>Approvals</h3>
+        </a>
+        
+        <a th:href="@{/admin_statement_range}" id="statement">
           <span class="material-symbols-sharp">insights </span>
           <h3>Statements</h3>
         </a>
@@ -71,7 +71,7 @@
           start main part
         --------------- -->
 
-    <main><h2>Welcome, <span sec:authentication="principal.username"> User</span></h2>
+    <main><h2>Welcome, <span th:text="${adminName}"> User</span></h2>
       <form action="#"th:action="@{/set_milkRate}" method="POST" th:object="${milkRate}">
         <div class = "form_outside">
           <div class="personal_detail">

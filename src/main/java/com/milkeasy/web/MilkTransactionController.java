@@ -93,7 +93,8 @@ public class MilkTransactionController {
 		String email = principal.getName();
 		User loggedUser = userRepository.findByEmail(email);
 		Long collectorId = loggedUser.getId();
-		List<MilkTransaction> allMilkTransaction = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorId(fromDate,toDate,collectorId);
+		String approvalStatus = "approved";
+		List<MilkTransaction> allMilkTransaction = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorIdAndApprovalStatus(fromDate,toDate,collectorId, approvalStatus);
 		
 		if (buttonClicked.equals(",download")) {
 			generatePDFService.createMilkTransactionStatementPdf(loggedUser, allMilkTransaction, customDateRange);
@@ -118,7 +119,8 @@ public class MilkTransactionController {
 		String email = principal.getName();
 		User loggedUser = userRepository.findByEmail(email);
 		Long farmerId = loggedUser.getId();
-		List<MilkTransaction> allMilkTransaction =  milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerId(fromDate,toDate,farmerId);
+		String approvalStatus = "approved";
+		List<MilkTransaction> allMilkTransaction =  milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerIdAndApprovalStatus(fromDate,toDate,farmerId, approvalStatus);
 		
 		if (buttonClicked.equals(",download")) {
 			generatePDFService.createMilkTransactionStatementPdf(loggedUser, allMilkTransaction, customDateRange);
@@ -158,11 +160,12 @@ public class MilkTransactionController {
 		Float milkRate = milkRateRepository.getRateByDate(milkTransaction.getCollectionDate());
 		milkTransaction.setApprovalStatus("pending");
 		milkTransaction.setRate(milkRate);
+		milkTransaction.setAmount(milkRate * milkTransaction.getQuantity());
 		
 		//save milk transaction
 		milktransactionService.addMilkTransaction(milkTransaction);
 		
-		senderService.sendMilkTransactionToFarmer(milkTransaction);
+		
     	return "redirect:/view_add_mc";
 		
 	}
@@ -184,6 +187,8 @@ public class MilkTransactionController {
 		MilkTransaction milkTransaction = milktransactionService.getMilkTransactionBytransactionId(id);
 		milkTransaction.setApprovalStatus(approval_status);
 		milkTransactionRepo.updateApprovalStatusByTransactionId(milkTransaction.getTransactionId(), milkTransaction.getApprovalStatus());
+		
+		senderService.sendMilkTransactionToFarmerAndCollector(milkTransaction);
 		
 		String email = principal.getName();
 		User adminUser = userRepository.findByEmail(email);
