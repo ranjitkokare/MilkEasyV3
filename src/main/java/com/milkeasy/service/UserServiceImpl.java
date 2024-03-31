@@ -53,4 +53,14 @@ public class UserServiceImpl implements UserService{
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 	
+	@Override
+	public void updatePassword(User user) {
+		String encodedPasswrod = passwordEncoder.encode(user.getPassword());
+		
+		userRepository.updatePasswordByEmail(encodedPasswrod, user.getEmail());
+		
+		return;
+	}
+	
+	
 }

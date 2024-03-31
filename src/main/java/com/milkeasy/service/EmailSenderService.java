@@ -1,6 +1,7 @@
 package com.milkeasy.service;
 
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,15 @@ public class EmailSenderService {
         User collectorUser = userRepository.findByFullName(collectorFullName);
         String collectorEmail = collectorUser.getEmail();
         sendSimpleEmail(collectorEmail, subject, collectorBody);  
+	}
+	
+	public void sendResetPasswordEmail(String email) {
+		String subject = "[MilkEasy] Please reset your password";
+		String encodedEmail = new String(Base64.getEncoder().encode(email.getBytes()));
+		String resetLink = "http://localhost:8080/resetPassword/" + encodedEmail;
+		String body = "We heard that you lost your GitHub password. Sorry about that!\nBut don’t worry! You can use the following link to reset your password:\n" 
+						+ resetLink + "\n\nThanks,\nThe MilkEasy Team";
+		sendSimpleEmail(email, subject, body);
+		
 	}
 }

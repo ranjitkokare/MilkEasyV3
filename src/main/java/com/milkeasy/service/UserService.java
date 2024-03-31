@@ -8,4 +8,6 @@ import com.milkeasy.web.dto.UserRegistrationDto;
 public interface UserService extends UserDetailsService{
 	User save(UserRegistrationDto registrationDto);
 	
+	public void updatePassword(User user);
+	
 }
