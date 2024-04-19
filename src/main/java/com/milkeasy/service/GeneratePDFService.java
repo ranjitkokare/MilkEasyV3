@@ -47,7 +47,7 @@ public class GeneratePDFService {
 
              // Table headers
                 table.addHeaderCell(new Cell().add(new Paragraph("Collection Date").setBold().setFontSize(12)));
-                table.addHeaderCell(new Cell().add(new Paragraph("Collector ID").setBold().setFontSize(12)));
+                table.addHeaderCell(new Cell().add(new Paragraph("Collector Full Name").setBold().setFontSize(12)));
                 table.addHeaderCell(new Cell().add(new Paragraph("Farmer Full Name").setBold().setFontSize(12)));
                 table.addHeaderCell(new Cell().add(new Paragraph("Quantity").setBold().setFontSize(12)));
                 table.addHeaderCell(new Cell().add(new Paragraph("Rate").setBold().setFontSize(12)));
@@ -55,7 +55,7 @@ public class GeneratePDFService {
 
                 for (MilkTransaction milkTransaction : allMilkTransaction) {
                     table.addCell(new Cell().add(new Paragraph(milkTransaction.getCollectionDate().toString()).setFontSize(10)));
-                    table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getCollectorId())).setFontSize(10)));
+                    table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getCollectorFullName())).setFontSize(10)));
                     table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getFarmerFullName())).setFontSize(10)));
                     table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getQuantity())).setFontSize(10)));
                     table.addCell(new Cell().add(new Paragraph(String.valueOf(milkTransaction.getRate())).setFontSize(10)));

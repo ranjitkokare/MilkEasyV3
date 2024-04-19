@@ -63,9 +63,11 @@
   
         <main>
          <!-- end insights -->
+        <h2>Welcome, <span th:text="${adminName}"> User</span></h2>
+        <h1>Statement</h1>
         <div class="recent_order"><br>
-			<h2>Welcome, <span th:text="${adminName}"> User</span></h2>
-           <h1>Statement</h1>
+			
+           
            <!--
            <div class="statment_date_filter" th:object="${customDateRange}">
                   <label>From Date</label>
@@ -83,8 +85,8 @@
                 <tr>
                   <th>Tr.Id</th>
                   <th>Collection Date</th>
-                  <th>Farmer id</th>
-                  <th>Collector id</th>
+                  <th>Farmer Name</th>
+                  <th>Collector Name</th>
                   <th>Quantity</th>
                   <th>Rate</th>
                   <th>Amount</th>
@@ -94,8 +96,8 @@
                    <tr th:each="milkTransaction : ${listMilkTransaction}">
                      <td th:text="${milkTransaction.transactionId}"></td>
                      <td th:text="${milkTransaction.collectionDate}"></td>
-                     <td th:text="${milkTransaction.farmerId}"></td>
-                     <td th:text="${milkTransaction.collectorId}">Due</td>
+                     <td th:text="${milkTransaction.farmerFullName}"></td>
+                     <td th:text="${milkTransaction.collectorFullName}">Due</td>
                      <td th:text="${milkTransaction.quantity}">Due</td>
                      <td th:text="${milkTransaction.rate}">Due</td>
                      <td class="warning"  th:text="${milkTransaction.amount}"></td>

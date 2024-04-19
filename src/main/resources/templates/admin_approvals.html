@@ -67,9 +67,9 @@
   
         <main>
          <!-- end insights -->
-        <div class="recent_order"><br>
-			<h2>Welcome, <span th:text="${adminName}"> User</span></h2>
+         <h2>Welcome <span th:text="${adminName}"> User</span></h2>
            <h1>Pending Approvals</h1>
+        <div class="recent_order">
            <table>
 			   <thead>
                 <tr>
@@ -84,8 +84,8 @@
 				  <th></th>
                 </tr>
                </thead>
-                <tbody>
-                   <tr th:each="milkTransaction : ${listMilkTransaction}">
+               <tbody>
+                  <tr th:each="milkTransaction : ${listMilkTransaction}">
                      <td th:text="${milkTransaction.transactionId}"></td>
                      <td th:text="${milkTransaction.collectionDate}"></td>
                      <td th:text="${milkTransaction.farmerFullName}"></td>
@@ -95,7 +95,7 @@
                      <td class="warning"  th:text="${milkTransaction.amount}"></td>
 					 <td ><a th:href="@{/approveMilkTransaction/approved/{id}(id=${milkTransaction.transactionId})}" class="approvebtn btn-primary">Approve </a></td>
 					 <td ><a th:href="@{/approveMilkTransaction/rejected/{id}(id=${milkTransaction.transactionId})}" class="rejectbtn btn-primary">Reject</td>
-                   </tr>
+                  </tr>
                 </tbody>
            </table>
            <!--<a href="#">Show All</a> -->

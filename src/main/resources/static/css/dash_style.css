@@ -342,6 +342,22 @@ main .insights .progress .number{
 
 main .recent_order{
    margin-top: 2rem;
+    /* Add a fixed height and enable overflow */
+    height: 450px; /* Adjust height as needed */
+    overflow-y: auto;
+    position: relative; /* Ensure proper stacking context */
+
+}
+
+main .recent_order table{
+	
+}
+/* Make the table header sticky */
+main .recent_order table thead {
+    position: sticky;
+    top: 0;
+    background-color: var(--clr-white);
+    z-index: 1; /* Ensure header stays above table content */
 }
 
 main .recent_order h2{
@@ -360,7 +376,19 @@ main .recent_order table{
   box-shadow: var(--box-shadow);
   transition: all .3s ease;
   color: var(--clr-dark);
+   /* Add scrollbar */
+  overflow-y: auto;
+    /* Limit height and enable scrolling */
+  max-height: 300px;
+  
 }
+
+main .recent_order table th{
+    padding: 1rem; /* Add padding to cells */
+    border-bottom: 1px solid var(--clr-white); /* Separate table rows */
+}
+
+
 main .recent_order table:hover{
   box-shadow: none;
 }
@@ -390,8 +418,6 @@ main .recent_order .statment_date_filter button{
   	background-color: #4070f4;
   	transition: all 0.3s linear;
   	cursor: pointer;
-  
-   
 }
 
 form button:hover{

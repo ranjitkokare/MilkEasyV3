@@ -42,7 +42,7 @@
 
 				<h1>Registration</h1>
 
-				<form th:action="@{/registration}" method="post" th:object="${user}">
+				<form th:action="@{/registration}" method="post" th:object="${user}" onsubmit="return validateForm()">
 					<div class = "form-group">
 						<label for ="Role"> Role </label> :
 					<br>
@@ -62,9 +62,9 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label" for="email"> Email </label> <input
-							id="email" class="form-control" th:field="*{email}" required
-							autofocus="autofocus" />
+						<label class="control-label" for="email"> Email </label> 
+						<input id="email" class="form-control" th:field="*{email}" 
+							required autofocus="autofocus" />
 					</div>
 					
 					<div class="form-group">
@@ -92,5 +92,68 @@
 			</div>
 		</div>
 	</div>
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function validateForm() {
+        var role = document.getElementById("meRole").value;
+        var fullName = document.getElementById("fullName").value;
+        var email = document.getElementById("email").value;
+        var mobile = document.getElementById("mobile").value;
+        var address = document.getElementById("address").value;
+        var password = document.getElementById("password").value;
+		
+		var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        // Indian Mobile Number Pattern
+        var mobilePattern = /^\+91[6-9][0-9]{9}$/;
+
+        // Indian Address Pattern
+        var addressPattern = /^.{5,100}$/;
+
+        // Password Pattern: At least 8 characters, one uppercase, one lowercase, one digit, and one special character
+        var passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$/;
+
+        // Validate Role
+        if (role === "Select Role") {
+            alert("Please select a role.");
+            return false;
+        }
+
+        // Validate Full Name
+        if (fullName === "") {
+            alert("Please enter your full name.");
+            return false;
+        }
+
+        // Validate Email
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        // Validate Mobile Number
+        if (!mobilePattern.test(mobile)) {
+            alert("Please enter a valid Indian mobile number.");
+            return false;
+        }
+
+        // Validate Address
+        if (!addressPattern.test(address)) {
+            alert("Please enter a valid address (between 5 and 100 characters).");
+            return false;
+        }
+
+        // Validate Password
+        if (!passwordPattern.test(password)) {
+            alert("Please enter a valid password (at least 8 characters, one uppercase, one lowercase, one digit, and one special character).");
+            return false;
+        }
+
+        return true;
+    }
+
+    /*]]>*/
+</script>
+
 </body>
 </html>

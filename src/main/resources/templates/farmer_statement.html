@@ -37,11 +37,12 @@
                 <span class="material-symbols-sharp">insights </span>
                 <h3>Statements</h3>
              </a>
+             <!--
              <a th:href="@{farmer_feedback}">
                 <span class="material-symbols-sharp">mail_outline </span>
                 <h3>Feedbacks</h3>
                 <span class="msg_count">14</span>
-             </a>
+             </a>-->
   
              <a sec:authorize="isAuthenticated()" th:href="@{/logout}">
               <span class="material-symbols-sharp">logout </span>
@@ -63,9 +64,10 @@
   
         <main>
          <!-- end insights -->
+         <h2>Welcome, <span sec:authentication="principal.username"> User</span></h2>
+          <h1>Statement</h1>
         <div class="recent_order"><br>
-			<h2>Welcome, <span sec:authentication="principal.username"> User</span></h2>
-           <h1>Statement</h1>
+			
            <!--
            <div class="statment_date_filter" th:object="${customDateRange}">
                   <label>From Date</label>
@@ -83,8 +85,8 @@
                 <tr>
                   <th>Tr.Id</th>
                   <th>Collection Date</th>
-                  <th>Farmer id</th>
-                  <th>Collector id</th>
+                  <th>Farmer Name</th>
+                  <th>Collector Name</th>
                   <th>Quantity</th>
                   <th>Rate</th>
                   <th>Amount</th>
@@ -94,8 +96,8 @@
                    <tr th:each="milkTransaction : ${listMilkTransaction}">
                      <td th:text="${milkTransaction.transactionId}"></td>
                      <td th:text="${milkTransaction.collectionDate}"></td>
-                     <td th:text="${milkTransaction.farmerId}"></td>
-                     <td th:text="${milkTransaction.collectorId}"></td>
+                     <td th:text="${milkTransaction.farmerFullName}"></td>
+                     <td th:text="${milkTransaction.collectorFullName}"></td>
                      <td th:text="${milkTransaction.quantity}"></td>
                      <td th:text="${milkTransaction.rate}"></td>
                      <td class="warning"  th:text="${milkTransaction.amount}"></td>

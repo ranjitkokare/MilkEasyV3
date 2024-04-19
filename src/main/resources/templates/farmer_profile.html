@@ -38,11 +38,12 @@
           <span class="material-symbols-sharp">insights </span>
           <h3>Statements</h3>
         </a>
+        <!--
         <a th:href="@{/farmer_feedback}" id="feedback">
           <span class="material-symbols-sharp">mail_outline </span>
           <h3>Feedbacks</h3>
           <span class="msg_count">14</span>
-        </a>
+        </a> -->
 
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">
               <span class="material-symbols-sharp">logout </span>
@@ -68,31 +69,31 @@
               <div class="pd_fields">
                 <div class="pd_fields_individual">
                   <label>Full Name</label>
-                  <input type="text" th:field="*{fullName}" th:placeholder=${userProfile.fullName}  required autofocus="autofocus">
+                  <input type="text" id="fullName" th:name=fullName th:value="${userProfile.fullName}"  required autofocus="autofocus">
                 </div>
                 <div class="pd_fields_individual">
                   <label>Mobile Number</label>
-                  <input type="number" th:field="*{mobile}" th:placeholder="${userProfile.mobile}" required autofocus="autofocus">
+                  <input type="text" id="mobile" th:name=mobile th:value="${userProfile.mobile}" required autofocus="autofocus">
                 </div>
   
                 <div class="pd_fields_individual">
                   <label>Email</label>
-                  <input type="email" th:value="${userProfile.email }" required autofocus="autofocus" disabled>
+                  <input type="email" id="email" th:value="${userProfile.email }" required autofocus="autofocus" disabled>
                 </div>
   
                 <div class="pd_fields_individual">
                   <label>UPI Id</label>
-                  <input type="text" th:field="*{upiId}" th:placeholder="${userProfile.upiId}" required autofocus="autofocus">
+                  <input type="text"  id="upiId" th:name=upiId th:value="${userProfile.upiId}" required autofocus="autofocus">
                 </div>
   
                 <div class="pd_fields_individual">
                   <label>Address</label>
-                  <input type="text" th:field="*{address}" th:placeholder="${userProfile.address}" required autofocus="autofocus">
+                  <input type="text" id="address" th:name=address th:value="${userProfile.address}" required autofocus="autofocus">
                   <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
                 </div>
               </div>
             <div class="buttons"> 
-              <button class="saveBtn">
+              <button type="submit" subclass="saveBtn">
                 <span class="btnText">Update</span>
                 <i class="uil uil-file-edit-alt"></i>
               </button> 
@@ -133,7 +134,62 @@
       </div>
 
     </div>
+	<script th:inline="javascript">
+    /*<![CDATA[*/
 
+    function validateForm() {
+       
+        //var fullName = document.getElementById("fullName").value;
+        var mobile = document.getElementById("mobile").value;
+        var address = document.getElementById("address").value;
+       	var upiId = document.getElementById("upiId").value;
+		
+		//var fullNamePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+        // Indian Mobile Number Pattern
+        var mobilePattern = /^\+91[6-9][0-9]{9}$/;
+
+        // Indian Address Pattern
+        var addressPattern = /^.{5,100}$/;
+
+        // UPI ID Pattern: 
+        var upiPattern = /^[a-zA-Z0-9.-]{2, 256}@[a-zA-Z][a-zA-Z]{2, 64}$/
+
+
+        // Validate Full Name
+        if (fullName === "") {
+            alert("Please enter your full name.");
+            return false;
+        }
+
+        // Validate Email
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        // Validate Mobile Number
+        if (!mobilePattern.test(mobile)) {
+            alert("Please enter a valid Indian mobile number.");
+            return false;
+        }
+
+        // Validate Address
+        if (!addressPattern.test(address)) {
+            alert("Please enter a valid address (between 5 and 100 characters).");
+            return false;
+        }
+
+        // Validate Password
+        if (!upiPattern.test(upiId)) {
+            alert("Please enter a valid UPI Id");
+            return false;
+        }
+
+        return true;
+    }
+
+    /*]]>*/
+</script>
 
 
     <script src="text/dash_script.js" th:src="@{/js/dash_script.js}"></script>

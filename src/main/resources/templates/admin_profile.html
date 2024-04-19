@@ -77,32 +77,32 @@
               <div class="pd_fields">
                 <div class="pd_fields_individual">
                   <label>Full Name</label>
-                  <input type="text" th:field="*{fullName}" th:placeholder="${userProfile.fullName}" required autofocus="autofocus">
+                  <input type="text" id="fullName" th:name=fullName th:value="${userProfile.fullName}" required autofocus="autofocus">
                 </div>
                 <div class="pd_fields_individual">
                   <label>Mobile Number</label>
-                  <input type="number" th:field="*{mobile}" th:placeholder="${userProfile.mobile}" required autofocus="autofocus">
+                  <input type="text" id="mobile" th:name=mobile th:value="${userProfile.mobile}" required autofocus="autofocus">
                 </div>
   
                 <div class="pd_fields_individual">
                   <label>Email</label>
-                  <input type="email" th:value="${userProfile.email }" required autofocus="autofocus" disabled>
+                  <input type="email" id="email" th:value="${userProfile.email }" required autofocus="autofocus" disabled>
                 </div>
-  
+  				<!--
                 <div class="pd_fields_individual">
                   <label>UPI Id</label>
                   <input type="text" th:field="*{upiId}" th:placeholder="${userProfile.upiId}" required autofocus="autofocus">
                 </div>
-  
+  				-->
                 <div class="pd_fields_individual">
                   <label>Address</label>
-                  <input type="text" th:field="*{address}" th:placeholder="${userProfile.address}" required autofocus="autofocus">
+                  <input type="text" id="address" th:name=address th:value="${userProfile.address}" required autofocus="autofocus">
                   <i class='bx bx-tada bx-flip-vertical bx-current-location'></i>
                 </div>
               </div>
             <div class="buttons">
               
-              <button class="saveBtn">
+              <button type="submit" class="saveBtn">
                 <span class="btnText">Update</span>
                <i class="uil uil-file-edit-alt"></i>
               </button> 

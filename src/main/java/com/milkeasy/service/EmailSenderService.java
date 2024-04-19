@@ -75,7 +75,7 @@ public class EmailSenderService {
 		String subject = "[MilkEasy] Please reset your password";
 		String encodedEmail = new String(Base64.getEncoder().encode(email.getBytes()));
 		String resetLink = "http://localhost:8080/resetPassword/" + encodedEmail;
-		String body = "We heard that you lost your GitHub password. Sorry about that!\nBut don’t worry! You can use the following link to reset your password:\n" 
+		String body = "We heard that you lost your MilkEasy password. Sorry about that!\nBut don’t worry! You can use the following link to reset your password:\n" 
 						+ resetLink + "\n\nThanks,\nThe MilkEasy Team";
 		sendSimpleEmail(email, subject, body);
 		

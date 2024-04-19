@@ -38,7 +38,7 @@ public class DashboardController {
 			
 			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -7);
+			cal.add(Calendar.DATE, -9);
 			Date toEndofWeek =  cal.getTime();
 			Long adminId = loggedUser.getId();
 			//passing logged user name to dashboard
@@ -60,7 +60,7 @@ public class DashboardController {
 		else if (loggedUser.getMeRole().equals("collector")) {
 			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -7);
+			cal.add(Calendar.DATE, -9);
 			Date toEndofWeek =  cal.getTime();
 			Long collectorId = loggedUser.getId();
 			String approvalStatus = "approved";
@@ -78,7 +78,7 @@ public class DashboardController {
 		else if (loggedUser.getMeRole().equals("farmer")) {
 			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -7);
+			cal.add(Calendar.DATE, -9);
 			Date toEndofWeek =  cal.getTime();
 			Long farmerId = loggedUser.getId();
 			String approvalStatus = "approved";
