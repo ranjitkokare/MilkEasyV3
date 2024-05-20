@@ -2,6 +2,7 @@ package com.milkeasy.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.milkeasy.model.MilkRate;
 import com.milkeasy.model.MilkTransaction;
 
 @Repository
@@ -64,4 +66,6 @@ public interface MilkTransactionRepo extends JpaRepository<MilkTransaction, Long
 	@Transactional
 	@Query("update MilkTransaction t set t.approvalStatus = :approvalStatus where t.transactionId = :transactionId")
 	void updateApprovalStatusByTransactionId(@Param(value = "transactionId") long transactionId, @Param(value = "approvalStatus") String approvalStatus);
+
+	Optional<MilkTransaction> findByCollectionDate(Date date);
 }

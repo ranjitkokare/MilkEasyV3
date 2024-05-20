@@ -9,7 +9,11 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <link rel="stylesheet" href="../static/css/add_milk_colle.css" th:href="@{/css/add_milk_colle.css}">
-  
+  <script>
+    function showAlert(message) {
+      alert(message);
+    }
+  </script>
 </head>
 
 <body>
@@ -143,6 +147,16 @@
 
 
     <script src="text/dash_script.js" th:src="@{/js/dash_script.js}"></script>
+    <!-- Display error message if present -->
+    <script th:if="${showError}" th:inline="javascript">
+      showAlert("Contact Admin to Add Rate For the Day");
+    </script>
+    <script th:if="${success}" th:inline="javascript">
+      showAlert("Transaction added successfully");
+    </script>
+     <script th:if="${error}" th:inline="javascript">
+      showAlert("Transaction already Done");
+    </script>	
 </body>
 
 </html>

@@ -25,4 +25,5 @@ public interface MilkTransactionService{
 			Date fromCollectionDate, Date toCollectionDate, Long collectorId, String approvalStatus);
 	List<MilkTransaction> getMilkTransactionByAdminIdAndApprovalStatus(Long adminId, String approvalStatus);
  
+	boolean transactionExistsForDate(Date date);
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.milkeasy.model.CustomDateRange;
 import com.milkeasy.model.MilkRate;
@@ -132,7 +133,7 @@ public class MilkTransactionController {
 	
 	
 	@GetMapping("/view_add_mc")
-	public String viewAdd_mc(Model model) {
+	public String viewAdd_mc(Model model,@RequestParam(value = "error", required = false) String error,@RequestParam(value = "success", required = false) String successMessage ){
 		//create model attribute to bind form data
 		
 		MilkTransaction milkTransaction = new MilkTransaction();
@@ -140,36 +141,56 @@ public class MilkTransactionController {
 		
 		model.addAttribute("allFarmerFullNames", getAllFarmerFullNames());
 		model.addAttribute("allAdminFullNames", getAllAdminFullNames());
+		
+		// Check if there's an error message to display
+		model.addAttribute("showError", model.containsAttribute("errorMessage"));
+	    model.addAttribute("success", successMessage);
+	    model.addAttribute("error",error);
 		return "add_milk_collection";
 	} 
 	
 	@PostMapping("/add_mc")
-	public String addMilkTransaction(@ModelAttribute("milkTransaction") MilkTransaction milkTransaction, Principal principal){
+	public String addMilkTransaction(@ModelAttribute("milkTransaction") MilkTransaction milkTransaction, Principal principal,Model model){
 		
-		String email = principal.getName();
-		User loggedUser = userRepository.findByEmail(email);
-		milkTransaction.setCollectorId(loggedUser.getId());
-		milkTransaction.setCollectorFullName(loggedUser.getFullName());
+		try {
+			String email = principal.getName();
+			User loggedUser = userRepository.findByEmail(email);
+			milkTransaction.setCollectorId(loggedUser.getId());
+			milkTransaction.setCollectorFullName(loggedUser.getFullName());
+			
+			User farmerUser = userRepository.findByFullName(milkTransaction.getFarmerFullName());
+			milkTransaction.setFarmerId(farmerUser.getId());
+			
+			User adminUser = userRepository.findByFullName(milkTransaction.getAdminFullName());
+			milkTransaction.setAdminId(adminUser.getId());
+			
+			Float milkRate = milkRateRepository.getRateByDate(milkTransaction.getCollectionDate());
+			milkTransaction.setApprovalStatus("pending");
+			milkTransaction.setRate(milkRate);
+			
+			milkTransaction.setAmount(milkRate * milkTransaction.getQuantity());
+			
+			Date date = (Date) milkTransaction.getCollectionDate();
+			if (milktransactionService.transactionExistsForDate(date)) {
+				return "redirect:/view_add_mc?error=true";
+			}
+			//save milk transaction
+			milktransactionService.addMilkTransaction(milkTransaction);
+			
+	    	return "redirect:/view_add_mc?success=true";
 		
-		User farmerUser = userRepository.findByFullName(milkTransaction.getFarmerFullName());
-		milkTransaction.setFarmerId(farmerUser.getId());
-		
-		User adminUser = userRepository.findByFullName(milkTransaction.getAdminFullName());
-		milkTransaction.setAdminId(adminUser.getId());
-		
-		Float milkRate = milkRateRepository.getRateByDate(milkTransaction.getCollectionDate());
-		milkTransaction.setApprovalStatus("pending");
-		milkTransaction.setRate(milkRate);
-		milkTransaction.setAmount(milkRate * milkTransaction.getQuantity());
-		
-		//save milk transaction
-		milktransactionService.addMilkTransaction(milkTransaction);
-		
-		
-    	return "redirect:/view_add_mc";
-		
+		} catch (NullPointerException e) {
+	        model.addAttribute("errorMessage", "Please add rate for this day");
+	        return viewAdd_mc(model); // Return to the form view with the error message
+		}
 	}
 	
+		private String viewAdd_mc(Model model) {
+			model.addAttribute("allFarmerFullNames", getAllFarmerFullNames());
+	        model.addAttribute("allAdminFullNames", getAllAdminFullNames());
+	        model.addAttribute("showError", model.containsAttribute("errorMessage"));
+	        return "add_milk_collection";
+		}
 	@GetMapping("/show_pending_approvals")
 	public String showPendingApprovals(Model model, Principal principal) {
 		String email = principal.getName();

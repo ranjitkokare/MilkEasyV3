@@ -74,5 +74,8 @@ public class MilkTransactionServiceImpl implements MilkTransactionService{
 		
 	}
 
-	
+	@Override
+	public boolean transactionExistsForDate(Date date) {
+		return milktransactionRepo.findByCollectionDate(date).isPresent();
+	}
 }

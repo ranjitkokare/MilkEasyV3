@@ -1,5 +1,8 @@
 package com.milkeasy.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +20,9 @@ public class MilkRateImpl implements MilkRateService{
 		this.milkrateRepository.save(milkRate);
 	}
 
+	
+	@Override
+	public boolean rateExistsForDate(Date date) {
+		return milkrateRepository.findByDate(date).isPresent();
+	}
 }
