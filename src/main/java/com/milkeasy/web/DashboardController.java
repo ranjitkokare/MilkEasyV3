@@ -32,21 +32,21 @@ public class DashboardController {
 	@GetMapping
 	public String home(Principal principal,Model model,Long transactionId) {
 		
+		Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now().minusDays(1));
+		Date toEndofWeek = java.sql.Date.valueOf(LocalDate.now().minusDays(7));
 		String email = principal.getName();
 		User loggedUser = userRepository.findByEmail(email);
 		if (loggedUser.getMeRole().equals("admin")) {
-			
-			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -9);
-			Date toEndofWeek =  cal.getTime();
+
 			Long adminId = loggedUser.getId();
+			
 			//passing logged user name to dashboard
 			String adminName = loggedUser.getFullName();
 			model.addAttribute("adminName",adminName);
+			
 //			MilkTransaction milkTransaction = new MilkTransaction();
 //			String approvalStatus = milkTransaction.getApprovalStatus();
-//			
+			
 			Double totalApprovedQuantity = milkTransactionRepo.getTotalQuantityByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndAdminIdAndApprovalStatus(toEndofWeek,
 					fromYesterday, adminId, "approved");
 			model.addAttribute("totalApprovedQuantity", totalApprovedQuantity);
@@ -58,10 +58,7 @@ public class DashboardController {
 			return "admin_dashboard";
 		}
 		else if (loggedUser.getMeRole().equals("collector")) {
-			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -9);
-			Date toEndofWeek =  cal.getTime();
+
 			Long collectorId = loggedUser.getId();
 			String approvalStatus = "approved";
 			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndCollectorIdAndApprovalStatus(toEndofWeek,fromYesterday, collectorId, approvalStatus);
@@ -76,10 +73,7 @@ public class DashboardController {
 			return "collector_dashboard";
 		}
 		else if (loggedUser.getMeRole().equals("farmer")) {
-			Date fromYesterday =  java.sql.Date.valueOf(LocalDate.now());
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -9);
-			Date toEndofWeek =  cal.getTime();
+
 			Long farmerId = loggedUser.getId();
 			String approvalStatus = "approved";
 			List<MilkTransaction> milk_list = milktransactionService.getMilkTransactionByCollectionDateGreaterThanEqualAndCollectionDateLessThanEqualAndFarmerIdAndApprovalStatus(toEndofWeek,fromYesterday, farmerId, approvalStatus);
