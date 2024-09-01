@@ -57,11 +57,14 @@ MilkEasy is a web application designed to streamline dairy business operations, 
 **User Authentication**
 - Users can register and log in to the system.
 - Password recovery functionality is available via email.
+  
 **Transaction Management**
 - Manage transactions between farmers and dairy owners.
 - Generate and download PDF statements of transactions.
+  
 **Dashboard**
 - View metrics related to dairy operations, including transaction summaries and user activities.
+  
 **Profile Management**
 - Users can view and update their personal information.
 
