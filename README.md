@@ -32,7 +32,7 @@ MilkEasy is a web application designed to streamline dairy business operations, 
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/your-username/milkeasy.git
+   git clone https://github.com/ranjitkokare/MilkEasyV3.git
    cd milkeasy
    
 2. **Configure MySQL:**
