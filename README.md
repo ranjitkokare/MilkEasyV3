@@ -36,42 +36,39 @@ MilkEasy is a web application designed to streamline dairy business operations, 
    cd milkeasy
    
 2. **Configure MySQL:**
-
-Create a new database named milkeasy.
-Update the application.properties file in the src/main/resources directory with your MySQL credentials.
+- Create a new database named milkeasy.
+- Update the application.properties file in the src/main/resources directory with your MySQL credentials.
 
 3. **Build the project:**
-
-sh
-Copy code
-mvn clean install
+   ```sh
+   Copy code
+   mvn clean install
 
 4. **Run the application:**
-
-sh
-Copy code
-mvn spring-boot:run
+   ```sh
+   Copy code
+   mvn spring-boot:run
 
 5. **Access the application:**
 
-Open your browser and navigate to http://localhost:8080.
+- Open your browser and navigate to http://localhost:8080.
 
 ## Usage
 **User Authentication**
-Users can register and log in to the system.
-Password recovery functionality is available via email.
+- Users can register and log in to the system.
+- Password recovery functionality is available via email.
 **Transaction Management**
-Manage transactions between farmers and dairy owners.
-Generate and download PDF statements of transactions.
+- Manage transactions between farmers and dairy owners.
+- Generate and download PDF statements of transactions.
 **Dashboard**
-View metrics related to dairy operations, including transaction summaries and user activities.
+- View metrics related to dairy operations, including transaction summaries and user activities.
 **Profile Management**
-Users can view and update their personal information.
+- Users can view and update their personal information.
 
 ## Project Structure
-bash
-Copy code
-src/main/java/com/milkeasy
+   ```bash
+   Copy code
+   src/main/java/com/milkeasy
 │
 ├── controller          # Handles HTTP requests and responses
 ├── service             # Contains the business logic
