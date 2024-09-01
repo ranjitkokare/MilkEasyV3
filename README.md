@@ -76,8 +76,7 @@ MilkEasy is a web application designed to streamline dairy business operations, 
 ├── controller          # Handles HTTP requests and responses
 ├── service             # Contains the business logic
 ├── repository          # Interfaces for database access
-├── model               # Java classes representing database entities
-└── exception           # Custom exception handling
+└── model               # Java classes representing database entities
 │
 src/main/resources
 ├── application.properties  # Main configuration file for the Spring Boot application
